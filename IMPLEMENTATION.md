@@ -25,6 +25,11 @@
    [x] Test Tailwinds configuration by simplifying the app component and styling it with Tailwind.
 
 
+ **Connect frontend to backend**
+
+   [x] Test connection between the frontend and the backend by getting "Hello World!" from the backend and display it in the middle of the frontend app html page and style it with Tailwind.
+
+
  **Frontend Login Implementation**
 
    [x] Create the following folders for the frontend: components, pages and services
@@ -32,6 +37,9 @@
    [x] Create a home page component and a chat page component
 
    [x] Add routing to the two new pages
+
+
+
 
    [ ] 
 
