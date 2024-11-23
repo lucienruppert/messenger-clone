@@ -1,4 +1,3 @@
-
 # Recommended Monorepo Folder Structure
 
 This folder structure is designed for a repository containing both backend and frontend code.
@@ -51,23 +50,28 @@ This folder structure is designed for a repository containing both backend and f
 ## Details on Key Folders
 
 ### `/backend`
+
 - Contains all server-side code, including APIs, business logic, and database interactions.
 - Organized into folders like `/controllers`, `/models`, and `/routes`.
 
 ### `/frontend`
+
 - Houses the client-side application (React, Angular, Vue, etc.).
 - Separates reusable components, page-level components, and styling.
 
 ### `/shared`
+
 - A place for shared code between the backend and frontend, such as:
   - Utility functions (e.g., date formatting, validation).
   - TypeScript types/interfaces.
   - Configurations or constants used in both projects.
 
 ### `/scripts`
+
 - Useful for storing automation scripts, such as for starting both backend and frontend simultaneously, or deployment tasks.
 
 ## Top-Level Files
+
 - **`package.json` (Root)**: Use a single `package.json` for managing monorepo-wide dependencies (like linting or prettier) and `workspaces` for backend and frontend.
   - Example of workspaces:
     ```json
@@ -81,10 +85,13 @@ This folder structure is designed for a repository containing both backend and f
 ## How to Manage This Structure
 
 ### Install Dependencies
+
 Use a package manager like Yarn Workspaces, NPM Workspaces, or PNPM to manage dependencies across projects.
 
 ### Run Backend and Frontend Together
+
 Create a root-level script (e.g., `start.sh` or `package.json` scripts):
+
 ```json
 {
   "scripts": {
@@ -96,6 +103,7 @@ Create a root-level script (e.g., `start.sh` or `package.json` scripts):
 ```
 
 ### CI/CD Integration
+
 Set up CI pipelines to build and test both projects individually (e.g., run backend tests, then frontend tests).
 
 ---
