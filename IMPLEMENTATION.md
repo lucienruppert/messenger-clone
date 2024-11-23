@@ -38,6 +38,8 @@
 
    [x] Add routing to the two new pages
 
+   [ ] Move the display of message coming from the backend from app to home component
+
 
 
 
