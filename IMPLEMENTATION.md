@@ -1,12 +1,8 @@
-# RETEST LOCALLY, RETEST REMOTELY EVERY STEP OF THE WAY !!!! #
-
-# TO THE AI: Make one change/create one file at a time.
-
 # Development Sequence for Messenger Clone
 
 ## Phase 1: Project Setup and Basic Structure
 
-1. **Initial Project & Backend Setup**
+1. **Initial Project Setup**
 
    - [x] Set up Git repository with proper .gitignore
 
@@ -16,21 +12,34 @@
 
    - [X] Test that  the service is running
 
-   - [X] Deploy the  server and retest
+   - [ ] Deploy the  server and retest
 
-   - [X] Set up Vitest for unit testing
+   - [ ] Set up Vitest for unit testing
 
+   Make one change/create one file at a time.
 
-2. **Create Basic Frontend Structure**
-
-   - [ ] Create Angular, standalone, frontend project with Angular CLI in the main directory (no need for )
-
-   - [ ] Configure Tailwind CSS
+   - [ ] Set up NestJS WebSocketModule
 
    - [ ] Set up MongoDB Atlas database
 
+   - [ ] Set up a simple HTML file to test backend services
 
-   - [ ] Set up NestJS WebSocketModule
+
+
+
+2. **Deploy to test backend setup**
+
+   - [ ] [Deploy NestJS backend for testing purposes.](BACKEND-DEPLOYMENT.md)
+
+
+3. **Create Basic Frontend Structure**
+
+   - [ ] Create Angular frontend project with Angular CLI
+
+   - [ ] Configure Tailwind CSS
+
+   - [ ] Create the same functionality as in the test HTML file
+
 
 4. **Frontend Structure**
 
