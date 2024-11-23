@@ -12,17 +12,10 @@
 
    - [X] Test that  the service is running
 
-   - [ ] Deploy the  server and retest
+   - [x] Deploy the  server and retest
 
-   - [ ] Set up Vitest for unit testing
+   - [x] Set up Vitest for unit testing
 
-   Make one change/create one file at a time.
-
-   - [ ] Set up NestJS WebSocketModule
-
-   - [ ] Set up MongoDB Atlas database
-
-   - [ ] Set up a simple HTML file to test backend services
 
 
 
@@ -30,6 +23,12 @@
 2. **Deploy to test backend setup**
 
    - [ ] [Deploy NestJS backend for testing purposes.](BACKEND-DEPLOYMENT.md)
+
+   - [ ] Set up NestJS WebSocketModule
+
+   - [ ] Set up MongoDB Atlas database
+
+
 
 
 3. **Create Basic Frontend Structure**
