@@ -1,6 +1,7 @@
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 
+// Use ESM format for Vite config
 export default defineConfig({
   test: {
     globals: true,
