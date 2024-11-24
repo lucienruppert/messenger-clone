@@ -43,7 +43,7 @@
 
  **Websocket basic implementation**
 
-   [x] Implement websocket in the backend folder 
+   [x] Implement websocket in the backend folder using its node_modules only
 
 
 
