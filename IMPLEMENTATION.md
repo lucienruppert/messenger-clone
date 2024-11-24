@@ -46,8 +46,22 @@
 
    [x] Create a simple .ts file to test it mimicking the client
 
+**Connect database to the backend**
 
+   [ ] Connect Mongo DB Atlas database with backend
+
+   [ ] Create User data model
+
+   [ ] Based on the User data model create a document in the database
+
+   [ ] Write a backend script that creates a new User entry in the database with hased password
+
+   [ ] Write a frontend service that gets this User's information from the database 
    
+   [ ] Modify the home component so that it display the received User data 
+
+
+
 
    [ ] Build chat list component with virtual scrolling
 
@@ -57,19 +71,12 @@
 
    [ ] Add message input and sending functionality
 
-   [ ] Connect WebSocket client
-
-   [ ] Implement client-side caching with IndexedDB
-
-   [ ] Add error boundaries in components
-
    [ ] Implement responsive design with Tailwind
 
    [ ] Set up Angular routing
 
    [ ] Create basic services for API communication
 
-## Phase 2: Core Messaging Features
 
 **Backend API Development**
 
@@ -90,63 +97,10 @@
 
    [ ] Implement message sending/receiving via WebSocket
 
-**Error Handling & Reliability**
 
-   [ ] Implement retry mechanism with exponential backoff
 
-   [ ] Add offline detection and recovery
 
-   [ ] Implement offline message queuing
 
-   [ ] Add error indicators in UI
-
-## Phase 3: Testing & Performance 
-
-**Testing Implementation**
-
-   [ ] Write unit tests with Vitest
-
-   [ ] Implement E2E tests with Cypress
-
-   [ ] Create integration tests for APIs
-
-   [ ] Set up performance testing
-
-**Performance Optimization**
-
-   [ ] Implement Redis caching for chat history
-
-   [ ] Optimize virtual scrolling performance
-
-   [ ] Fine-tune IndexedDB caching strategy
-
-   [ ] Set up API rate limiting
-
-**Monitoring Setup**
-
-   [ ] Integrate Winston for logging
-
-   [ ] Set up Prometheus metrics
-
-   [ ] Configure Grafana dashboards
-
-   [ ] Implement health checks
-
-## Phase 4: DevOps & Deployment
-
-**Deployment Preparation**
-
-   [ ] Set up CI/CD pipeline
-
-   [ ] Configure production environment
-
-   [ ] Set up MongoDB backup procedures
-
-   [ ] Document deployment process
-
-   [ ] Create monitoring dashboards
-
-## Future Enhancements
 
 **Additional Features**
 
@@ -162,6 +116,34 @@
 
    [ ] Push notifications
 
+   [ ] Implement client-side caching with IndexedDB
+
+   [ ] Add error boundaries in components
+
+   [ ] Integrate Winston for logging
+
+   [ ] Set up Prometheus metrics
+
+   [ ] Configure Grafana dashboards
+
+   [ ] Implement health checks
+
+   [ ] Set up MongoDB backup procedures
+
+   [ ] Document deployment process
+
+   [ ] Create monitoring dashboards
+
+   [ ] Implement Redis caching for chat history
+
+   [ ] Optimize virtual scrolling performance
+
+   [ ] Fine-tune IndexedDB caching strategy
+
+   [ ] Set up API rate limiting
+
+   [ ] Implement E2E tests with Cypress
+
 **Security Implementation**
 
    [ ] User authentication with JWT
@@ -175,3 +157,13 @@
    [ ] Password hashing
 
    [ ] Request validation
+
+**Error Handling & Reliability**
+
+   [ ] Implement retry mechanism with exponential backoff
+
+   [ ] Add offline detection and recovery
+
+   [ ] Implement offline message queuing
+
+   [ ] Add error indicators in UI
