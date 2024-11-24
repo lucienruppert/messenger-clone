@@ -43,7 +43,11 @@
 **Websocket basic implementation**
 
    [x] Implement websocket in the backend folder using its node_modules only
+
    [x] Create a simple .ts file to test it mimicking the client
+
+
+   
 
    [ ] Build chat list component with virtual scrolling
 
