@@ -1,3 +1,5 @@
+### INCREMENTAL FULL STACK PAIR PROGRAMMING ###
+
 # Development Sequence for Messenger Clone
 
 ## Phase 1: Project Setup and Basic Structure
@@ -19,15 +21,14 @@
 2. **Setup Frontend**
 
    [x] Create Angular frontend project with Angular CLI
-
+†
    [x] Configure Tailwind CSS
 
    [x] Test Tailwinds configuration by simplifying the app component and styling it with Tailwind.
 
-
  **Connect frontend to backend**
 
-   [x] Test connection between the frontend and the backend by getting "Hello World!" from the backend and display it in the middle of the frontend app html page and style it with Tailwind.
+   [x] Test connection between the frontend and the backend by getting the message "Hello World!" from the backend and display it in the middle of the frontend main app component and style it with Tailwind.
 
 
  **Frontend Login Implementation**
@@ -38,12 +39,11 @@
 
    [x] Add routing to the two new pages
 
-   [ ] Move the display of message coming from the backend from app to home component
+   [x] Move the display of message coming from the backend from app to home component
 
 
 
 
-   [ ] 
 
    [ ] Build chat list component with virtual scrolling
 
