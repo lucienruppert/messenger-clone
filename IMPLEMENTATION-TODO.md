@@ -4,7 +4,9 @@
 
    [x] Create a new Database and in it a Chat Collection 
 
-   [ ] Connect Mongo DB Atlas database from the backend
+   [x] Connect Mongo DB Atlas database from the backend
+
+   [ ] Place the db connection string into an env file and .gitignore that.
 
    [ ] Create User data model
 
