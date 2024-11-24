@@ -1,10 +1,10 @@
-### INCREMENTAL FULL STACK PAIR PROGRAMMING ###
+### INCREMENTAL FULL STACK PAIR PROGRAMMING ###
 
 # Development Sequence for Messenger Clone
 
 ## Phase 1: Project Setup and Basic Structure
 
-1. **Initial Project Setup**
+**Initial Project Setup**
 
    [x] Set up Git repository with proper .gitignore
 
@@ -18,20 +18,19 @@
 
    [x] Set up Vitest for unit testing
 
-2. **Setup Frontend**
+**Setup Frontend**
 
    [x] Create Angular frontend project with Angular CLI
-†
+
    [x] Configure Tailwind CSS
 
    [x] Test Tailwinds configuration by simplifying the app component and styling it with Tailwind.
 
- **Connect frontend to backend**
+**Connect frontend to backend**
 
    [x] Test connection between the frontend and the backend by getting the message "Hello World!" from the backend and display it in the middle of the frontend main app component and style it with Tailwind.
 
-
- **Frontend Login Basic Structure**
+**Frontend Login Basic Structure**
 
    [x] Create the following folders for the frontend: components, pages and services
 
@@ -41,12 +40,10 @@
 
    [x] Move the display of message coming from the backend from app to home component
 
- **Websocket basic implementation**
+**Websocket basic implementation**
 
    [x] Implement websocket in the backend folder using its node_modules only
    [x] Create a simple .ts file to test it mimicking the client
-
-
 
    [ ] Build chat list component with virtual scrolling
 
@@ -68,37 +65,9 @@
 
    [ ] Create basic services for API communication
 
-3. **Deploy to test backend setup**
+## Phase 2: Core Messaging Features
 
-   [ ] [Deploy NestJS backend for testing purposes.](BACKEND-DEPLOYMENT.md)
-
-   [ ] Set up NestJS WebSocketModule
-
-   [ ] Set up MongoDB Atlas database
-
-
-5. **Backend Foundation**
-
-   [ ] Set up MongoDB Atlas connection
-
-   [ ] Create MongoDB collections and indexes
-
-   [ ] Set up WebSocket connection using NestJS WebSocketModule
-
-   [ ] Define WebSocket events:
-
-   ```typescript
-   enum WebSocketEvents {
-     MESSAGE_SENT = "message.sent",
-     MESSAGE_DELIVERED = "message.delivered",
-     MESSAGE_SEEN = "message.seen",
-     CHAT_UPDATED = "chat.updated",
-   }
-   ```
-
-## Phase 2: Core Messaging Features (P0)
-
-6. **Backend API Development**
+**Backend API Development**
 
    [ ] Implement User APIs (GET /users, GET /users/:id)
 
@@ -117,8 +86,7 @@
 
    [ ] Implement message sending/receiving via WebSocket
 
-7.
-8. **Error Handling & Reliability**
+**Error Handling & Reliability**
 
    [ ] Implement retry mechanism with exponential backoff
 
@@ -128,9 +96,9 @@
 
    [ ] Add error indicators in UI
 
-## Phase 3: Testing & Performance (P1)
+## Phase 3: Testing & Performance 
 
-9. **Testing Implementation**
+**Testing Implementation**
 
    [ ] Write unit tests with Vitest
 
@@ -140,66 +108,66 @@
 
    [ ] Set up performance testing
 
-10. **Performance Optimization**
+**Performance Optimization**
 
-    [ ] Implement Redis caching for chat history
+   [ ] Implement Redis caching for chat history
 
-    [ ] Optimize virtual scrolling performance
+   [ ] Optimize virtual scrolling performance
 
-    [ ] Fine-tune IndexedDB caching strategy
+   [ ] Fine-tune IndexedDB caching strategy
 
-    [ ] Set up API rate limiting
+   [ ] Set up API rate limiting
 
-11. **Monitoring Setup**
+**Monitoring Setup**
 
-    [ ] Integrate Winston for logging
+   [ ] Integrate Winston for logging
 
-    [ ] Set up Prometheus metrics
+   [ ] Set up Prometheus metrics
 
-    [ ] Configure Grafana dashboards
+   [ ] Configure Grafana dashboards
 
-    [ ] Implement health checks
+   [ ] Implement health checks
 
-## Phase 4: DevOps & Deployment (P2)
+## Phase 4: DevOps & Deployment
 
-12. **Deployment Preparation**
+**Deployment Preparation**
 
-    [ ] Set up CI/CD pipeline
+   [ ] Set up CI/CD pipeline
 
-    [ ] Configure production environment
+   [ ] Configure production environment
 
-    [ ] Set up MongoDB backup procedures
+   [ ] Set up MongoDB backup procedures
 
-    [ ] Document deployment process
+   [ ] Document deployment process
 
-    [ ] Create monitoring dashboards
+   [ ] Create monitoring dashboards
 
-## Future Enhancements (P2)
+## Future Enhancements
 
-13. **Additional Features**
+**Additional Features**
 
-    [ ] Authentication system
+   [ ] Authentication system
 
-    [ ] File/image sharing
+   [ ] File/image sharing
 
-    [ ] Typing indicators
+   [ ] Typing indicators
 
-    [ ] Online/offline status
+   [ ] Online/offline status
 
-    [ ] Search functionality
+   [ ] Search functionality
 
-    [ ] Push notifications
+   [ ] Push notifications
 
-14. **Security Implementation**
+**Security Implementation**
 
-    [ ] User authentication with JWT
+   [ ] User authentication with JWT
 
-    [ ] Rate limiting for API endpoints
+   [ ] Rate limiting for API endpoints
 
-    [ ] Input validation and sanitization
+   [ ] Input validation and sanitization
 
-    [ ] CORS configuration
+   [ ] CORS configuration
 
-    [ ] Password hashing
+   [ ] Password hashing
 
-    [ ] Request validation
+   [ ] Request validation
