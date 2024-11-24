@@ -5,19 +5,24 @@ This folder structure is designed for a repository containing both backend and f
 ```
 /project-root
 │
-├── /backend              # Backend folder
-│   ├── /src              # Source files for the backend
-│   │   ├── /controllers  # API controllers
-│   │   ├── /models       # Data models or entities
-│   │   ├── /routes       # API routes
-│   │   ├── /services     # Business logic
-│   │   ├── /middlewares  # Middleware logic
-│   │   └── /utils        # Utility functions
-│   ├── /config           # Environment configuration files
-│   ├── /tests            # Unit and integration tests for the backend
-│   ├── package.json      # Backend-specific dependencies
-│   ├── tsconfig.json     # TypeScript configuration (if applicable)
-│   └── server.js         # Backend entry point (or `main.ts` for TypeScript)
+/backend              # Backend folder
+├── /src              # Source files for the backend
+│   ├── /controllers  # API controllers
+│   ├── /models       # Data models or entities
+│   ├── /routes       # API routes
+│   ├── /services     # Business logic
+│   ├── /middlewares  # Middleware logic
+│   ├── /utils        # Utility functions
+│   ├── /websockets   # WebSocket-specific logic
+│   │   ├── connection.ts # Handles WebSocket setup and connection logic
+│   │   ├── events.ts     # WebSocket event handlers (e.g., 'message', 'close')
+│   │   ├── types.ts      # (Optional) Types for WebSocket messages
+│   │   └── utils.ts      # (Optional) WebSocket-specific utilities
+├── /config           # Environment configuration files
+├── /tests            # Unit and integration tests for the backend
+├── package.json      # Backend-specific dependencies
+├── tsconfig.json     # TypeScript configuration (if applicable)
+└── server.js         # Backend entry point (or `main.ts` for TypeScript)
 │
 ├── /frontend             # Frontend folder
 │   ├── /src              # Source files for the frontend
