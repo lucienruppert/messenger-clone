@@ -31,7 +31,7 @@
    [x] Test connection between the frontend and the backend by getting the message "Hello World!" from the backend and display it in the middle of the frontend main app component and style it with Tailwind.
 
 
- **Frontend Login Implementation**
+ **Frontend Login Basic Structure**
 
    [x] Create the following folders for the frontend: components, pages and services
 
@@ -41,7 +41,9 @@
 
    [x] Move the display of message coming from the backend from app to home component
 
+ **Websocket basic implementation**
 
+   [x] Implement websocket in the backend folder 
 
 
 
