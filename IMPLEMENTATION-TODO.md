@@ -6,9 +6,9 @@
 
    [x] Connect Mongo DB Atlas database from the backend
 
-   [ ] Place the db connection string into an env file, use it instead of directly using the api key and .gitignore the env file.
+   [x] Place the db connection string into an env file, use it instead of directly using the api key and .gitignore the env file.
 
-**Connect database to the backend**
+**Create and flow User information between backend and frontend**
 
    [ ] Create User data model
 
