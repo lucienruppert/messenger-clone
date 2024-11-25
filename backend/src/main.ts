@@ -1,20 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { MongoClient } from 'mongodb';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-
-const uri = process.env.DB_CONNECTION_STRING;
 
 async function bootstrap() {
-  const client = new MongoClient(uri);
-  await client.connect();
-  console.log('Connected to MongoDB Atlas database');
-
   const app = await NestFactory.create(AppModule);
   app.enableCors();
+
+  // Log that we're attempting to connect
+  console.log('Attempting to connect to MongoDB...');
+
   await app.listen(3000);
+  console.log('Application is running on: http://localhost:3000');
 }
 
-bootstrap();
+bootstrap().catch((error) => {
+  console.error('Error starting the application:', error);
+  process.exit(1);
+});

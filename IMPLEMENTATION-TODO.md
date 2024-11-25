@@ -8,6 +8,8 @@
 
    [ ] Place the db connection string into an env file, use it instead of directly using the api key and .gitignore the env file.
 
+**Connect database to the backend**
+
    [ ] Create User data model
 
    [ ] Write a backend script that creates a new User entry in the database with hased password
