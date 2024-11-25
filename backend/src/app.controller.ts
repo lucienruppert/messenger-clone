@@ -12,6 +12,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return `${this.appService.getHello()}`;
+    return `${this.appService.getHello()} - Database connection status is ${this.connection.readyState === 1 ? 'connected' : 'disconnected'}`;
   }
 }
