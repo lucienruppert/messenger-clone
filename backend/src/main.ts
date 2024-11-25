@@ -1,8 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MongoClient } from 'mongodb';
+import * as dotenv from 'dotenv';
 
-const uri = 'mongodb+srv://luciendelmar:w77us2H1fyguW1gJ@cluster0.c0bviof.mongodb.net/?retryWrites=true&w=majority';
+dotenv.config();
+
+const uri = process.env.DB_CONNECTION_STRING;
 
 async function bootstrap() {
   const client = new MongoClient(uri);
