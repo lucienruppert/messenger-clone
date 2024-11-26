@@ -8,11 +8,11 @@
    
    [x] Modify php validator for the new table 
 
-   [ ] Copy al relevant angular components and service into the project
+   [ ] Copy all relevant angular components and service into the project
 
    [ ] Connect the frontend to the new php backend
 
-   [ ] Test auth and write tests for it.
+   [ ] Test auth and write tests for it.x
 
 
 **Create and flow User information between backend and frontend**
@@ -62,7 +62,7 @@
 
 
 
-
+   [ ] Fix authentication.service CookieService injection problem
 
 **Additional Features**
 

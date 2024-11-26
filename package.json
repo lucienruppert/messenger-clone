@@ -6,6 +6,9 @@
     "tailwindcss": "^3.4.15"
   },
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "@angular/cdk": "^19.0.0",
+    "@angular/material": "^19.0.0",
+    "dotenv": "^16.4.5",
+    "ngx-cookie-service": "^19.0.0"
   }
 }
