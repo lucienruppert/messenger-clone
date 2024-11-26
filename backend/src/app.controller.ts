@@ -8,7 +8,11 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     @InjectConnection() private connection: Connection,
-  ) {}
+  ) {
+    if (connection && connection.readyState === 1) {
+      console.log('Connected to MongoDB');
+    }
+  }
 
   @Get()
   getHello(): string {

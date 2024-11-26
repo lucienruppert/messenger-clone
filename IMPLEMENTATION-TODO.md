@@ -10,7 +10,7 @@
 
 **Create and flow User information between backend and frontend**
 
-   [ ] Create User data model
+   [ ] Create User data model OK
 
    [ ] Write a backend script that creates a new User entry in the database with hased password
 
