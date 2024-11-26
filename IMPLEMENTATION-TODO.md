@@ -1,12 +1,17 @@
 ### INCREMENTAL FULL STACK PAIR PROGRAMMING ###
 
-**Connect database to the backend**
+**Create Login**
 
-   [x] Create a new Database and in it a Chat Collection 
+   [ ] Create php backend with auth endpoints
 
-   [x] Connect Mongo DB Atlas database from the backend
+   [ ] Create new mysql users_chat table 
+   
+   [ ] Copy al relevant angular components and service into the project
 
-   [x] Place the db connection string into an env file, use it instead of directly using the api key and .gitignore the env file.
+   [ ] Connect the frontend to the new php backend
+
+   [ ] Test auth and write tests for it.
+
 
 **Create and flow User information between backend and frontend**
 
@@ -17,9 +22,6 @@
    [ ] Write a frontend service that gets this User's information from the database 
    
    [ ] Modify the home component so that it display the received User data 
-
-
-
 
    [ ] Build chat list component with virtual scrolling
 

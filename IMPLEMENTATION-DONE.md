@@ -39,3 +39,12 @@
    [x] Implement websocket in the backend folder using its node_modules only
 
    [x] Create a simple .ts file to test it mimicking the client
+
+**Connect database to the backend**
+
+   [x] Create a new Database and in it a Chat Collection 
+
+   [x] Connect Mongo DB Atlas database from the backend
+
+   [x] Place the db connection string into an env file, use it instead of directly using the api key and .gitignore the env file.
+
