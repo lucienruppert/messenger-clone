@@ -2,3 +2,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --dark: #031525; /* rgb(3, 21, 37) */
+  --lighter: rgba(13, 34, 54);
+  --secondary: rgb(8, 143, 143);
+  /* --secondary: rgb(255, 68, 51); orange */
+  color: var(--white);
+}
+
+/* .cdk-overlay-dark-backdrop {
+  background: rgba(3, 21, 37, 0.8);
+} */
+/*
+cdk-dialog-container {
+  position: fixed;
+  top: 20%;
+  left: calc(50% - 144px);
+} */
+
+.mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background,
+.mdc-checkbox__ripple {
+  background-color: grey !important;
+  border-color: grey !important;
+}
+
+.mat-mdc-menu-content {
+  background-color: var(--dark);
+}
+
+.mat-mdc-button:not(:disabled) {
+  color: var(--white);
+}
+
+.mdc-snackbar__surface {
+  background-color: var(--secondary) !important;
+  border: 1px solid grey;
+}
+
+.mdc-snackbar__label {
+  color: white !important;
+  text-align: center;
+}

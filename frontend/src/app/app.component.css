@@ -1,0 +1,4 @@
+:host {
+  @apply flex h-screen;
+  background-color: var(--dark);
+}
