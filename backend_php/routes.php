@@ -1,7 +1,7 @@
 <?php
 
 $router = new Core\Router();
-$path = '/backend/api';
+$path = '/backend_chat/api';
 
 $router->options("$path/*", '/options.php');
 
