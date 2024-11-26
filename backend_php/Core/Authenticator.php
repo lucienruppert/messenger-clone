@@ -13,7 +13,7 @@ class Authenticator
   {
     $config = require base_path('config.php');
     $db = new Database($config['database'], $config['username'], $config['password']);
-    $query = "select * from users where email = :email";
+    $query = "select * from users_chat where email = :email";
     $result = $db->query($query, [':email' => $email])->find();
 
     if ($result && password_verify($password, $result['password'])) {

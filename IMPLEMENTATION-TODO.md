@@ -2,10 +2,12 @@
 
 **Create Login**
 
-   [ ] Create php backend with auth endpoints
+   [x] Copy the php backend with auth endpoints
 
-   [ ] Create new mysql users_chat table 
+   [x] Create new mysql users_chat table 
    
+   [x] Modify php validator for the new table 
+
    [ ] Copy al relevant angular components and service into the project
 
    [ ] Connect the frontend to the new php backend
