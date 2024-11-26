@@ -1,0 +1,16 @@
+<main>
+  <form #form="ngForm" (ngSubmit)="submitForm()">
+    <input type="email" [(ngModel)]="email" placeholder="Email" name="name" />
+    <input
+      type="password"
+      [(ngModel)]="password"
+      placeholder="Jelszó"
+      name="password"
+    />
+    <button type="submit">Bejelentkezem</button>
+    <span class="error">{{ errorMessage }}</span>
+    <span class="spinner" *ngIf="showSpinner"
+      ><mat-spinner color="warn"></mat-spinner
+    ></span>
+  </form>
+</main>

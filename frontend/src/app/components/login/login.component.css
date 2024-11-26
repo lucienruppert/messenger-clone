@@ -1,0 +1,31 @@
+:host {
+  @apply mt-40 flex justify-center w-full;
+}
+* {
+  @apply mb-2;
+}
+form {
+  background-color: var(--lighter);
+  @apply flex flex-col w-72 rounded-lg p-3;
+}
+input {
+  background-color: var(--dark);
+  @apply rounded-md p-2 text-gray-700;
+}
+::placeholder {
+  @apply text-sm text-gray-700;
+}
+button[type="submit"] {
+  background-color: var(--secondary);
+  @apply rounded-md p-2;
+}
+.error {
+  color: var(--secondary);
+  @apply text-center;
+}
+.spinner {
+  @apply flex justify-center;
+}
+.mat-warn {
+  --mdc-circular-progress-active-indicator-color: var(--secondary);
+}
