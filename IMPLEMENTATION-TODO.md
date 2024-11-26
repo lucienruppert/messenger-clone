@@ -1,20 +1,7 @@
 ### INCREMENTAL FULL STACK PAIR PROGRAMMING ###
 
-**Create Login**
+**Create what happens after login**
 
-   [x] Copy the php backend with auth endpoints
-
-   [x] Create new mysql users_chat table 
-   
-   [x] Modify php validator for the new table 
-
-   [x] Copy all relevant angular components and service into the project
-
-   [ ] Connect the frontend to the new php backend
-
-   [ ] Implement new injection syntax
-
-   [ ] Test auth and write tests for it.
 
 
 **Create and flow User information between backend and frontend**
@@ -62,7 +49,7 @@
    [ ] Implement message sending/receiving via WebSocket
 
 
-
+   [ ] Remove 'role' from user schema-db-api-frontend flow
 
    [ ] Fix authentication.service CookieService injection problem
 

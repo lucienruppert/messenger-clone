@@ -48,3 +48,14 @@
 
    [x] Place the db connection string into an env file, use it instead of directly using the api key and .gitignore the env file.
 
+**Create Login**
+
+   [x] Copy the php backend with auth endpoints
+
+   [x] Create new mysql users_chat table 
+   
+   [x] Modify php validator for the new table 
+
+   [x] Copy all relevant angular components and service into the project
+
+   [x] Connect the frontend to the new php backend
