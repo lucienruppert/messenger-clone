@@ -1,6 +1,8 @@
 ### INCREMENTAL FULL STACK PAIR PROGRAMMING ###
 
-**Create what happens after login**
+[] Delete node_modules and .json files from main directory and retest
+
+**Create what happens after login, make a basic UI**
 
 
 
