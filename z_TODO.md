@@ -1,4 +1,6 @@
-### INCREMENTAL FULL STACK PAIR PROGRAMMING ###
+**Fix**
+
+[ ] Email and role are saved in Localstorage for all my projects, so they can get mixed up - unsecure! Solution: implement unique keys for it.
 
 [] Delete node_modules and .json files from main directory and retest
 
