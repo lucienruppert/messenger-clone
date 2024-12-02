@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ChatComponent } from './components/chat/chat.component';
+import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
+import { ChatComponent } from './components/dashboard/chat/chat.component';
 import { LoginComponent } from './components/login/login.component';
 import { GeneralRouteGuardService } from './services/general-route-guard.service';
 import { AuthRedirectGuardService } from './services/auth-redirect-guard.service';
