@@ -26,7 +26,7 @@ export class AuthenticationService {
       const result$ = this.http.post<User>(`${this.baseUrl}/login`, formData);
       const userData = await firstValueFrom(result$);
       this.setSessionState(true);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/dashboard']);
       return userData;
     } catch (error: unknown) {
       const typedError = error as HttpErrorResponse;
