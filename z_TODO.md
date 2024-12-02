@@ -7,8 +7,8 @@
 
 **Create what happens after login, make a basic UI**
 
-[ ] Create basic dashboard structure 
-[ ] Create connection indicator as in earlier version
+[x] Create basic dashboard structure 
+[ ] Create connection indicator as in earlier version - Use Behaviorsubject
 [ ] 
 
 
