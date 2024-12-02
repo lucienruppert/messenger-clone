@@ -10,23 +10,18 @@ import { User } from '../types';
 })
 export class AuthenticationService {
   public isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public isAdmin$ = new BehaviorSubject<boolean>(false);
-  public isUploader$ = new BehaviorSubject<boolean>(false);
   private baseUrl: string = environment.BASE_URL;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {
-    if (localStorage.getItem('email')) this.isLoggedIn$.next(true);
-  }
+  ) {}
 
   public async login(email: string, password: string): Promise<User> {
     const formData = this.getFormData(email, password);
     try {
       const result$ = this.http.post<User>(`${this.baseUrl}/login`, formData);
       const userData = await firstValueFrom(result$);
-      this.storeDataLocally(userData);
       this.setSubjectValues(userData);
       this.router.navigate(['/home']);
       return userData;
@@ -45,14 +40,8 @@ export class AuthenticationService {
     return formData;
   }
 
-  private storeDataLocally(userData: User) {
-    localStorage.setItem('email', userData.email);
-  }
-
   private setSubjectValues(userData: User) {
     this.isLoggedIn$.next(true);
-    this.isAdmin$.next(userData.role === 'superadmin');
-    this.isUploader$.next(userData.role === 'uploader');
   }
 
   public logout(): void {
@@ -63,9 +52,6 @@ export class AuthenticationService {
 
   public logoutonClient(): void {
     this.isLoggedIn$.next(false);
-    localStorage.removeItem('email');
-    //this.cookieService.delete("PHPSESSID");
-    //this.cookieService.delete('PHPSESSID', '/', 'luciendelmar.com');
   }
 
   public async logoutOnServer(): Promise<void> {
@@ -76,9 +62,5 @@ export class AuthenticationService {
     } catch (error) {
       console.error('Error logging out:', error);
     }
-  }
-
-  public getUserEmail(): string {
-    return localStorage.getItem('email')!;
   }
 }
