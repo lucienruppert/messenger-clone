@@ -1,3 +1,8 @@
 :host {
-  @apply h-screen flex justify-center items-center;
+  @apply text-white;
+  width: 400px;
+}
+
+div {
+  @apply border-r-2 h-full border-slate-700;
 }
