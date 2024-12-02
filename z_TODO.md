@@ -1,3 +1,10 @@
+**Move Node backend from Railway to dotRoll**
+
+[x] Register domain at dotroll
+[ ] Wait for domain approval
+[ ] Make sure it SSL is live
+[ ] Setup Node backend and make it operational
+
 **Fix**
 
 [ ] Email and role are saved in Localstorage for all my projects, so they can get mixed up - unsecure! Solution: implement unique keys for it.
