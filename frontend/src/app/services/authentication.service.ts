@@ -15,14 +15,17 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) {
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+    this.isLoggedIn$.next(isLoggedIn);
+  }
 
   public async login(email: string, password: string): Promise<User> {
     const formData = this.getFormData(email, password);
     try {
       const result$ = this.http.post<User>(`${this.baseUrl}/login`, formData);
       const userData = await firstValueFrom(result$);
-      this.setSubjectValues(userData);
+      this.setSessionState(true);
       this.router.navigate(['/home']);
       return userData;
     } catch (error: unknown) {
@@ -40,8 +43,9 @@ export class AuthenticationService {
     return formData;
   }
 
-  private setSubjectValues(userData: User) {
-    this.isLoggedIn$.next(true);
+  private setSessionState(isLoggedIn: boolean): void {
+    sessionStorage.setItem('isLoggedIn', isLoggedIn.toString());
+    this.isLoggedIn$.next(isLoggedIn);
   }
 
   public logout(): void {
@@ -51,7 +55,7 @@ export class AuthenticationService {
   }
 
   public logoutonClient(): void {
-    this.isLoggedIn$.next(false);
+    this.setSessionState(false);
   }
 
   public async logoutOnServer(): Promise<void> {
