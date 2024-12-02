@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../environment';
 import { User } from '../types';
 
@@ -17,16 +16,9 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    //private cookieService: CookieService,
     private router: Router,
   ) {
     if (localStorage.getItem('email')) this.isLoggedIn$.next(true);
-    if (localStorage.getItem('role') === 'superadmin') {
-      this.isAdmin$.next(true);
-      this.isUploader$.next(true);
-    }
-    if (localStorage.getItem('role') === 'uploader')
-      this.isUploader$.next(true);
   }
 
   public async login(email: string, password: string): Promise<User> {
@@ -54,19 +46,13 @@ export class AuthenticationService {
   }
 
   private storeDataLocally(userData: User) {
-    localStorage.setItem('role', userData.role);
     localStorage.setItem('email', userData.email);
   }
 
   private setSubjectValues(userData: User) {
     this.isLoggedIn$.next(true);
-    this.isAdmin$.next(false);
-    this.isUploader$.next(false);
-    if (userData.role === 'superadmin') {
-      this.isAdmin$.next(true);
-      this.isUploader$.next(true);
-    }
-    if (userData.role === 'uploader') this.isUploader$.next(true);
+    this.isAdmin$.next(userData.role === 'superadmin');
+    this.isUploader$.next(userData.role === 'uploader');
   }
 
   public logout(): void {
@@ -77,7 +63,6 @@ export class AuthenticationService {
 
   public logoutonClient(): void {
     this.isLoggedIn$.next(false);
-    localStorage.removeItem('role');
     localStorage.removeItem('email');
     //this.cookieService.delete("PHPSESSID");
     //this.cookieService.delete('PHPSESSID', '/', 'luciendelmar.com');
