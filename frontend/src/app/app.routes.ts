@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './pages/home/dashboard.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { LoginComponent } from './components/login/login.component';
 import { GeneralRouteGuardService } from './services/general-route-guard.service';
