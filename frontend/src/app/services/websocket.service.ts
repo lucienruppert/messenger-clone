@@ -45,9 +45,18 @@ export class WebSocketService {
       ).subscribe({
         next: (message) => {
           console.log('WebSocket message received:', message);
+          // Keep the connection alive after receiving the response
+          if (typeof message === 'string' && message.includes('Email stored successfully')) {
+            console.log('Login successful, maintaining connection');
+          }
         },
         error: (error) => {
           console.error('WebSocket error:', error);
+          this.isConnectedSubject.next(false);
+          this.reconnect();
+        },
+        complete: () => {
+          console.log('WebSocket connection completed');
           this.isConnectedSubject.next(false);
           this.reconnect();
         }
@@ -85,6 +94,7 @@ export class WebSocketService {
   }
 
   public disconnect(): void {
+    console.log("Disconnect activated.")
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -100,9 +110,17 @@ export class WebSocketService {
   public sendMessage(message: any): void {
     if (this.webSocket$ && !this.webSocket$.closed) {
       this.webSocket$.next(message);
-      console.log("logged in email sent:", message);
+      console.log("Logged in email sent:", message);
     } else {
       console.error("WebSocket is not connected");
+      // If not connected, try to reconnect and send the message
+      this.connect();
+      setTimeout(() => {
+        if (this.webSocket$ && !this.webSocket$.closed) {
+          this.webSocket$.next(message);
+          console.log("Logged in email sent after reconnection:", message);
+        }
+      }, 1000);
     }
   }
 }

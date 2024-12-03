@@ -17,20 +17,58 @@ async function bootstrap() {
     clients.add(ws);
     console.log(`New connection opened. Number of clients: ${clients.size}`);
 
+    // Send initial connection acknowledgment
+    ws.send(
+      JSON.stringify({
+        type: 'connection',
+        status: 'connected',
+      }),
+    );
+
     ws.on('message', (message) => {
       try {
         const data = JSON.parse(message.toString());
         if (data.type === 'login' && data.email) {
           emailStore[data.email] = ws;
-          console.log(`Stored email: ${data.email}`);
-          ws.send(`Email stored successfully`);
+          console.log(`Stored email: ${emailStore}`);
+          // Send a structured response
+          ws.send(
+            JSON.stringify({
+              type: 'login_response',
+              status: 'success',
+              message: 'Email stored successfully',
+            }),
+          );
+          // Send a heartbeat every 30 seconds to keep the connection alive
+          const heartbeatInterval = setInterval(() => {
+            if (ws.readyState === WebSocket.OPEN) {
+              ws.send(JSON.stringify({ type: 'heartbeat' }));
+            } else {
+              clearInterval(heartbeatInterval);
+            }
+          }, 30000);
+
+          // Clear interval when connection closes
+          ws.on('close', () => {
+            clearInterval(heartbeatInterval);
+          });
         } else {
           console.log(`Received message: ${message}`);
-          ws.send(`Hello, you sent: ${message}`);
+          ws.send(
+            JSON.stringify({
+              type: 'message_response',
+              message: `Message received: ${message}`,
+            }),
+          );
         }
       } catch (error) {
         console.error('Error parsing message:', error);
-        ws.send('Invalid message format');
+        ws.send(
+          JSON.stringify({
+            type: 'error',
+            message: 'Invalid message format',
+          }),
+        );
       }
     });
 
@@ -44,6 +82,10 @@ async function bootstrap() {
         }
       }
       console.log(`Client disconnected. Total clients: ${clients.size}`);
+    });
+
+    ws.on('error', (error) => {
+      console.error('WebSocket error:', error);
     });
   });
 
