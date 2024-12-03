@@ -2,7 +2,7 @@
 
 [x] Register domain at dotroll
 [x] Wait for domain approval
-[ ] Make sure it SSL is live
+[ ] Make sure SSL is live
 [ ] Setup Node backend and make it operational
 
 **Create messaging between the clients**
@@ -13,8 +13,10 @@
 [x] When sending the message, always append the sender's email to it on the frontend and console.log it on the backend.
 [x] Store from which client-email the message came from and console.log it with the message received
 
-
 [ ] Finalize message type (and replace any)
+
+**....**
+
 [ ] List all clients on the left side
  
 
