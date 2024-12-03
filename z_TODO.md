@@ -11,9 +11,9 @@
 [x] Send the To clients email to the backend
 [x] Store them in the backend
 
-[ ] On delete remove the client's email from the array
-[ ] Connect only upon login, not on opening the website
-[ ]
+[x] On delete remove the client's email from the array
+[ ] Connect to the server only after login, not when opening the website in the browser
+[ ] Fix new connection opening after logout.
 [ ]
 
 

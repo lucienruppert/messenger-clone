@@ -31,6 +31,7 @@ export class AuthenticationService {
       const userData = await firstValueFrom(result$);
       this.setSessionState(true, email);
       this.router.navigate(['/dashboard']);
+      this.webSocketService.connect(); // Connect to WebSocket after successful login
       this.sendEmailThroughWebSocket(email);
       return userData;
     } catch (error: unknown) {
@@ -57,6 +58,7 @@ export class AuthenticationService {
   public logout(): void {
     this.logoutonClient();
     this.logoutOnServer();
+    this.webSocketService.disconnect();
     this.router.navigate(['/']);
   }
 

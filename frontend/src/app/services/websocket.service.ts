@@ -14,10 +14,10 @@ export class WebSocketService {
   private reconnectSubscription: Subscription | null = null;
 
   constructor() {
-    this.connect();
+    // Do not connect automatically
   }
 
-  private connect(): void {
+  public connect(): void {
     if (!this.webSocket$ || this.webSocket$.closed) {
       this.webSocket$ = webSocket({
         url: 'ws://localhost:3000',
