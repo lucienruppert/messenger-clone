@@ -23,7 +23,7 @@ async function bootstrap() {
 
     ws.on('close', () => {
       clients.delete(ws);
-      console.log('Client disconnected. Total clients: ${clients.size}');
+      console.log(`Client disconnected. Total clients: ${clients.size}`);
     });
   });
 
