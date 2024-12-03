@@ -4,7 +4,7 @@ import WebSocket from 'ws';
 import * as http from 'http';
 
 const clients = new Set<WebSocket>();
-const emailStore: { [email: string]: WebSocket } = {};
+const emailStore: string[] = []; // Array to store all emails
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -29,9 +29,13 @@ async function bootstrap() {
       try {
         const data = JSON.parse(message.toString());
         if (data.type === 'login' && data.email) {
-          emailStore[data.email] = ws;
-          console.log(`Stored email: ${emailStore}`);
-          // Send a structured response
+          // Add email to array if it's not already there
+          if (!emailStore.includes(data.email)) {
+            emailStore.push(data.email);
+            console.log(`Stored new email: ${data.email}`);
+            console.log(`Total emails stored: ${emailStore.length}`);
+            console.log(`Current emails: ${emailStore.join(', ')}`);
+          }
           ws.send(
             JSON.stringify({
               type: 'login_response',
@@ -39,7 +43,6 @@ async function bootstrap() {
               message: 'Email stored successfully',
             }),
           );
-          // Send a heartbeat every 30 seconds to keep the connection alive
           const heartbeatInterval = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
               ws.send(JSON.stringify({ type: 'heartbeat' }));
@@ -74,13 +77,6 @@ async function bootstrap() {
 
     ws.on('close', () => {
       clients.delete(ws);
-      for (const email in emailStore) {
-        if (emailStore[email] === ws) {
-          delete emailStore[email];
-          console.log(`Removed email: ${email}`);
-          break;
-        }
-      }
       console.log(`Client disconnected. Total clients: ${clients.size}`);
     });
 
