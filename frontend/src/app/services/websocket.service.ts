@@ -20,7 +20,7 @@ export class WebSocketService {
   private connect(): void {
     if (!this.webSocket$ || this.webSocket$.closed) {
       this.webSocket$ = webSocket({
-        url: 'ws://localhost:50001',
+        url: 'ws://localhost:3000',
         openObserver: {
           next: () => {
             console.log('WebSocket connected');
