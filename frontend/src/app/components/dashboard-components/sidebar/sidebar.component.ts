@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { NgStyle } from '@angular/common';
-import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { WebSocketService } from '../../../services/websocket.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,27 +13,22 @@ import { AuthenticationService } from '../../../services/authentication.service'
   imports: [NgStyle, CommonModule],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  private isConnectedSubject = new BehaviorSubject<boolean>(true);
-  public isConnected$ = this.isConnectedSubject.asObservable();
-  private checkInterval = 5000; // Check every 5 seconds
-  private subscription: Subscription | null = null;
+  public isConnected$: Observable<boolean>;
 
-  constructor(private http: HttpClient, private authentication: AuthenticationService) {}
-
-  ngOnInit(): void {
-    this.subscription = interval(this.checkInterval).subscribe(() => {
-      this.http.get('http://localhost:3000').subscribe(
-        () => this.isConnectedSubject.next(true),
-        () => this.isConnectedSubject.next(false),
-      );
-    });
+  constructor(
+    private authentication: AuthenticationService,
+    private webSocketService: WebSocketService
+  ) {
+    this.isConnected$ = this.webSocketService.getConnectionStatus();
   }
+
+  ngOnInit(): void {}
 
   public logout(): void {
     this.authentication.logout();
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.webSocketService.disconnect();
   }
 }

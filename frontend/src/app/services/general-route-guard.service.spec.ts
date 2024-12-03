@@ -1,16 +1,31 @@
-/* tslint:disable:no-unused-variable */
-
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { GeneralRouteGuardService } from './general-route-guard.service';
+import { AuthenticationService } from './authentication.service';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
-describe('Service: GeneralRouteGuard', () => {
+describe('GeneralRouteGuardService', () => {
+  let service: GeneralRouteGuardService;
+  let mockAuthService: jasmine.SpyObj<AuthenticationService>;
+  let mockRouter: jasmine.SpyObj<Router>;
+
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [GeneralRouteGuardService]
+    mockAuthService = jasmine.createSpyObj('AuthenticationService', [], {
+      isLoggedIn$: new BehaviorSubject<boolean>(false)
     });
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+
+    TestBed.configureTestingModule({
+      providers: [
+        GeneralRouteGuardService,
+        { provide: AuthenticationService, useValue: mockAuthService },
+        { provide: Router, useValue: mockRouter }
+      ]
+    });
+    service = TestBed.inject(GeneralRouteGuardService);
   });
 
-  it('should ...', inject([GeneralRouteGuardService], (service: GeneralRouteGuardService) => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
-  }));
+  });
 });
