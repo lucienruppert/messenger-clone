@@ -1,5 +1,6 @@
 import WebSocket from 'ws';
 
+console.log('Websockets file loaded successfully!');
 const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on('connection', (ws) => {
