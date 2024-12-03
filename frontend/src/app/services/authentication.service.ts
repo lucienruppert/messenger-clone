@@ -1,20 +1,24 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { firstValueFrom, BehaviorSubject } from 'rxjs';
 import { environment } from '../environment';
 import { User } from '../types';
+import { WebSocketService } from './websocket.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   public isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  private emailSubject = new BehaviorSubject<string>('');
+  public email$ = this.emailSubject.asObservable();
   private baseUrl: string = environment.BASE_URL;
 
   constructor(
     private http: HttpClient,
     private router: Router,
+    private webSocketService: WebSocketService,
   ) {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
     this.isLoggedIn$.next(isLoggedIn);
@@ -25,8 +29,9 @@ export class AuthenticationService {
     try {
       const result$ = this.http.post<User>(`${this.baseUrl}/login`, formData);
       const userData = await firstValueFrom(result$);
-      this.setSessionState(true);
+      this.setSessionState(true, email);
       this.router.navigate(['/dashboard']);
+      this.sendEmailThroughWebSocket(email);
       return userData;
     } catch (error: unknown) {
       const typedError = error as HttpErrorResponse;
@@ -43,8 +48,9 @@ export class AuthenticationService {
     return formData;
   }
 
-  private setSessionState(isLoggedIn: boolean): void {
+  private setSessionState(isLoggedIn: boolean, email: string): void {
     sessionStorage.setItem('isLoggedIn', isLoggedIn.toString());
+    this.emailSubject.next(email);
     this.isLoggedIn$.next(isLoggedIn);
   }
 
@@ -55,7 +61,7 @@ export class AuthenticationService {
   }
 
   public logoutonClient(): void {
-    this.setSessionState(false);
+    this.setSessionState(false, '');
   }
 
   public async logoutOnServer(): Promise<void> {
@@ -66,5 +72,9 @@ export class AuthenticationService {
     } catch (error) {
       console.error('Error logging out:', error);
     }
+  }
+
+  private sendEmailThroughWebSocket(email: string): void {
+    this.webSocketService.sendMessage({ email });
   }
 }

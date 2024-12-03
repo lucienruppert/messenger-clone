@@ -7,7 +7,8 @@
 
 **Build up the websocket logic step by step**
 
-[] Copy the existing logic so more than one client can connect
+[ ] Copy the existing logic so more than one client can connect
+[ ] Send the To clients email to the backend
 
 **Create and flow User information between backend and frontend**
 
