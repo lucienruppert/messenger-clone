@@ -11,10 +11,11 @@
 [x] Create connection indicator as in earlier version - Use Behaviorsubject
 [x] Add logout button
 [x] Add logout to backend
+[x] Integrate websocket connection into server startup
+[x] Use 22.08.0 permanently
 
 [ ] Use indicator for websocket connection indicator
 
-[ ] Implement websocket connection
 
 
 
