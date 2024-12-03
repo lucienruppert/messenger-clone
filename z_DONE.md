@@ -59,3 +59,14 @@
    [x] Copy all relevant angular components and service into the project
 
    [x] Connect the frontend to the new php backend
+
+
+**Create what happens after login, make a basic UI**
+
+[x] Create basic dashboard structure 
+[x] Create connection indicator as in earlier version - Use Behaviorsubject
+[x] Add logout button
+[x] Add logout to backend
+[x] Integrate websocket connection into server startup
+[x] Use 22.08.0 permanently
+[x] Use indicator for websocket connection indicator
