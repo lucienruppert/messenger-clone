@@ -8,8 +8,13 @@
 **Create what happens after login, make a basic UI**
 
 [x] Create basic dashboard structure 
-[ ] Create connection indicator as in earlier version - Use Behaviorsubject
-[ ] 
+[x] Create connection indicator as in earlier version - Use Behaviorsubject
+[x] Add logout button
+[x] Add logout to backend
+
+[ ] Use indicator for websocket connection indicator
+
+[ ] Implement websocket connection
 
 
 

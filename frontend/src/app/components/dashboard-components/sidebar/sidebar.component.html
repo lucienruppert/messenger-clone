@@ -1,11 +1,11 @@
-<div>
-  <div class="p-5 flex justify-end">
-    <button (click)="logout()" class="logout mt-10">Kilépés</button>
+<main>
+  <div class="flex flex-row p-4 items-center justify-between">
+    <button mat-button (click)="logout()">Kilépés</button>
     <span
-      class="flex w-3 h-3 me-3 rounded-full"
+      class="flex w-3 h-3 rounded-full"
       [ngStyle]="{
         'background-color': (isConnected$ | async) ? 'green' : 'red',
       }"
     ></span>
   </div>
-</div>
+</main>
