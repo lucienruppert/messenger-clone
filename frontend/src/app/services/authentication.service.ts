@@ -18,10 +18,12 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private webSocket: WebSocketService,
+    private webSocketService: WebSocketService,
   ) {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+    const storedEmail = sessionStorage.getItem('userEmail') || '';
     this.isLoggedIn$.next(isLoggedIn);
+    this.emailSubject.next(storedEmail);
   }
 
   public async login(email: string, password: string): Promise<User> {
@@ -31,7 +33,7 @@ export class AuthenticationService {
       const userData = await firstValueFrom(result$);
       this.setSessionState(true, email);
       this.router.navigate(['/dashboard']);
-      this.webSocket.connect(); // Connect to WebSocket after successful login
+      this.webSocketService.connect(); // Connect to WebSocket after successful login
       this.sendEmailThroughWebSocket(email);
       return userData;
     } catch (error: unknown) {
@@ -51,6 +53,7 @@ export class AuthenticationService {
 
   private setSessionState(isLoggedIn: boolean, email: string): void {
     sessionStorage.setItem('isLoggedIn', isLoggedIn.toString());
+    sessionStorage.setItem('userEmail', email);
     this.emailSubject.next(email);
     this.isLoggedIn$.next(isLoggedIn);
   }
@@ -59,12 +62,13 @@ export class AuthenticationService {
     console.log("Logging out and disconnecting WebSocket...");
     this.logoutonClient();
     this.logoutOnServer();
-    this.webSocket.disconnect();
+    this.webSocketService.disconnect();
     this.router.navigate(['/']);
   }
 
   public logoutonClient(): void {
     this.setSessionState(false, '');
+    sessionStorage.removeItem('userEmail');
   }
 
   public async logoutOnServer(): Promise<void> {
@@ -78,6 +82,6 @@ export class AuthenticationService {
   }
 
   private sendEmailThroughWebSocket(email: string): void {
-    this.webSocket.sendMessage({ type: 'login', email: email });
+    this.webSocketService.sendMessage({ type: 'login', email: email });
   }
 }

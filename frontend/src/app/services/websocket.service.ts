@@ -15,7 +15,19 @@ export class WebSocketService {
   private intentionalDisconnect: boolean = false;
 
   constructor() {
-    // Do not connect automatically
+    // Check if user is logged in and connect if they are
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+    if (isLoggedIn) {
+      this.connect();
+      // Get the stored email and send it after connection
+      const email = sessionStorage.getItem('userEmail');
+      if (email) {
+        // Wait a bit for the connection to establish before sending
+        setTimeout(() => {
+          this.sendMessage({ type: 'login', email: email });
+        }, 1000);
+      }
+    }
   }
 
   public connect(): void {
@@ -87,6 +99,13 @@ export class WebSocketService {
             this.subscription = null;
           }
           this.connect();
+          // Resend email after reconnection if available
+          const email = sessionStorage.getItem('userEmail');
+          if (email) {
+            setTimeout(() => {
+              this.sendMessage({ type: 'login', email: email });
+            }, 1000);
+          }
         } else {
           if (this.reconnectSubscription) {
             this.reconnectSubscription.unsubscribe();
@@ -122,7 +141,7 @@ export class WebSocketService {
   public sendMessage(message: any): void {
     if (this.webSocket$ && !this.webSocket$.closed) {
       this.webSocket$.next(message);
-      console.log("Logged in email sent:", message);
+      console.log("Message sent:", message);
     } else {
       console.error("WebSocket is not connected");
       // If not connected and not intentionally disconnected, try to reconnect and send the message
@@ -131,7 +150,7 @@ export class WebSocketService {
         setTimeout(() => {
           if (this.webSocket$ && !this.webSocket$.closed) {
             this.webSocket$.next(message);
-            console.log("Logged in email sent after reconnection:", message);
+            console.log("Message sent after reconnection:", message);
           }
         }, 1000);
       }
