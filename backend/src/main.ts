@@ -27,11 +27,11 @@ async function bootstrap() {
 
     ws.on('message', (message) => {
       try {
-        const data = JSON.parse(message.toString());
-        if (data.type === 'login' && data.email) {
-          if (!emailStore.includes(data.email)) {
-            emailStore.push(data.email);
-            console.log(`Stored new email: ${data.email}`);
+        const incomingData = JSON.parse(message.toString());
+        if (incomingData.type === 'login' && incomingData.email) {
+          if (!emailStore.includes(incomingData.email)) {
+            emailStore.push(incomingData.email);
+            console.log(`Stored new email: ${incomingData.email}`);
             console.log(`Total emails stored: ${emailStore.length}`);
             console.log(`Current emails: ${emailStore.join(', ')}`);
           }
@@ -42,7 +42,7 @@ async function bootstrap() {
               message: 'Email stored successfully',
             }),
           );
-          (ws as any).email = data.email;
+          (ws as any).email = incomingData.email;
 
           const heartbeatInterval = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
@@ -57,7 +57,7 @@ async function bootstrap() {
             clearInterval(heartbeatInterval);
           });
         } else {
-          console.log(`Received message: ${message}`);
+          console.log(incomingData);
           ws.send(
             JSON.stringify({
               type: 'message_response',
