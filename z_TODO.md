@@ -7,33 +7,28 @@
 
 **Build up the websocket logic step by step**
 
-[ ] Copy the existing logic so more than one client can connect
-[ ] Send the To clients email to the backend
+[x] Copy the existing logic so more than one client can connect
+[x] Send the To clients email to the backend
+[x] Store them in the backend
+
+[ ] On delete remove the client's email from the array
+[ ] Connect only upon login, not on opening the website
+[ ]
+[ ]
+
+
 
 **Create and flow User information between backend and frontend**
 
    [ ] Create User data model OK
-
    [ ] Write a backend script that creates a new User entry in the database with hased password
-
    [ ] Write a frontend service that gets this User's information from the database 
-   
    [ ] Modify the home component so that it display the received User data 
-
    [ ] Build chat list component with virtual scrolling
-
    [ ] Create chat window component
-
    [ ] Implement message display with timestamps
-
    [ ] Add message input and sending functionality
-
    [ ] Implement responsive design with Tailwind
-
-   [ ] Set up Angular routing
-
-   [ ] Create basic services for API communication
-
 
 **Backend API Development**
 
