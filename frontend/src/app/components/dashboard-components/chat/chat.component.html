@@ -1,2 +1,13 @@
-<div>chats
+<div class="mt-auto">
+  <ul class="flex flex-col">
+    <!-- <li *ngFor="let message of messages" class="text-3xl">
+      {{ message }}
+    </li> -->
+  </ul>
 </div>
+
+<textarea rows="1"
+  [(ngModel)]="messageInput"
+  class="text-3xl mt-5 rounded-xl text-gray-500 p-3"
+  (keydown.enter)="sendMessage($event)"
+></textarea>

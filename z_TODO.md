@@ -5,17 +5,16 @@
 [ ] Make sure it SSL is live
 [ ] Setup Node backend and make it operational
 
-**Build up the websocket logic step by step**
+**Create messaging between the clients**
 
-[x] Copy the existing logic so more than one client can connect
-[x] Send the To clients email to the backend
-[x] Store them in the backend
+[x] Küldhessen a cliens üzenetet a szerverre
 
-[x] On delete remove the client's email from the array
-[x] Connect to the server only after login, not when opening the website in the browser
-[x] Fix new connection opening after logout.
-[ ]
+[ ] If I refresh it disconnects connection
 
+[ ] Fix message any type in websocket service
+
+[ ] List all clients on the left side
+ 
 
 
 **Create and flow User information between backend and frontend**

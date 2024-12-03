@@ -18,7 +18,7 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private webSocketService: WebSocketService,
+    private webSocket: WebSocketService,
   ) {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
     this.isLoggedIn$.next(isLoggedIn);
@@ -31,7 +31,7 @@ export class AuthenticationService {
       const userData = await firstValueFrom(result$);
       this.setSessionState(true, email);
       this.router.navigate(['/dashboard']);
-      this.webSocketService.connect(); // Connect to WebSocket after successful login
+      this.webSocket.connect(); // Connect to WebSocket after successful login
       this.sendEmailThroughWebSocket(email);
       return userData;
     } catch (error: unknown) {
@@ -59,7 +59,7 @@ export class AuthenticationService {
     console.log("Logging out and disconnecting WebSocket...");
     this.logoutonClient();
     this.logoutOnServer();
-    this.webSocketService.disconnect(); 
+    this.webSocket.disconnect();
     this.router.navigate(['/']);
   }
 
@@ -78,6 +78,6 @@ export class AuthenticationService {
   }
 
   private sendEmailThroughWebSocket(email: string): void {
-    this.webSocketService.sendMessage({ type: 'login', email: email });
+    this.webSocket.sendMessage({ type: 'login', email: email });
   }
 }

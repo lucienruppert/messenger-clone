@@ -1,3 +1,15 @@
 :host {
-  @apply w-full;
+  @apply flex bg-slate-300 h-screen flex-col justify-between text-white p-5;
+  background-color: var(--darkblue);
+}
+
+textarea {
+  width: 40vw;
+  background-color: var(--lightblue);
+}
+
+@media (max-width: 768px) {
+  textarea {
+    width: 90%;
+  }
 }

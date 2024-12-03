@@ -60,7 +60,6 @@
 
    [x] Connect the frontend to the new php backend
 
-
 **Create what happens after login, make a basic UI**
 
 [x] Create basic dashboard structure 
@@ -70,3 +69,13 @@
 [x] Integrate websocket connection into server startup
 [x] Use 22.08.0 permanently
 [x] Use indicator for websocket connection indicator
+
+**Build up versatile websocket connection**
+
+[x] Copy the existing logic so more than one client can connect
+[x] Send the To clients email to the backend
+[x] Store them in the backend
+
+[x] On delete remove the client's email from the array
+[x] Connect to the server only after login, not when opening the website in the browser
+[x] Fix new connection opening after logout.
