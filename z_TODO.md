@@ -8,9 +8,11 @@
 **Create messaging between the clients**
 
 [x] Küldhessen a cliens üzenetet a szerverre
+[x] If I refresh it disconnects connection
+[x] Resend emailt after refresh
 
-[ ] If I refresh it disconnects connection
-
+[ ] When sending the message, always append the sender's email to it on the frontend and console.log it on the backend.
+[ ] Store from which client-email the message came from and console.log it with the message received
 [ ] Fix message any type in websocket service
 
 [ ] List all clients on the left side
