@@ -3,15 +3,18 @@ import { AppModule } from './app.module';
 import WebSocket from 'ws';
 import * as http from 'http';
 
+const clients = new Set<WebSocket>();
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
   const server = http.createServer(app.getHttpAdapter().getInstance());
-  const wss = new WebSocket.Server({ server });
+  const webSocketServer = new WebSocket.Server({ server });
 
-  wss.on('connection', (ws) => {
-    console.log('Client connected');
+  webSocketServer.on('connection', (ws) => {
+    clients.add(ws);
+    console.log(`New connection opened. Number of clients: ${clients.size}`);
 
     ws.on('message', (message) => {
       console.log(`Received message: ${message}`);
@@ -19,7 +22,8 @@ async function bootstrap() {
     });
 
     ws.on('close', () => {
-      console.log('Client disconnected');
+      clients.delete(ws);
+      console.log('Client disconnected. Total clients: ${clients.size}');
     });
   });
 

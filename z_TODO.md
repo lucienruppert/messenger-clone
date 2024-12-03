@@ -1,10 +1,13 @@
 **Move Node backend from Railway to dotRoll**
 
 [x] Register domain at dotroll
-[ ] Wait for domain approval
+[x] Wait for domain approval
 [ ] Make sure it SSL is live
 [ ] Setup Node backend and make it operational
 
+**Build up the websocket logic step by step**
+
+[] Copy the existing logic so more than one client can connect
 
 **Create and flow User information between backend and frontend**
 
