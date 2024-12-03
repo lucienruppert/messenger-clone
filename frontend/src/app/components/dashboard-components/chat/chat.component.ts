@@ -16,7 +16,12 @@ export class ChatComponent {
 
   public sendMessage(event: Event) {
     event.preventDefault();
-    this.webSocket.sendMessage(this.messageInput);
+    const email = sessionStorage.getItem('userEmail');
+    if (email) {
+      this.webSocket.sendMessage({ message: this.messageInput, email: email });
+    } else {
+      console.error('User email not found in sessionStorage');
+    }
     this.messageInput = '';
   }
 }
