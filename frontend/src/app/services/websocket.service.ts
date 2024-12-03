@@ -12,12 +12,14 @@ export class WebSocketService {
   private webSocket$: WebSocketSubject<any> | null = null;
   private subscription: Subscription | null = null;
   private reconnectSubscription: Subscription | null = null;
+  private intentionalDisconnect: boolean = false;
 
   constructor() {
     // Do not connect automatically
   }
 
   public connect(): void {
+    this.intentionalDisconnect = false;
     if (!this.webSocket$ || this.webSocket$.closed) {
       this.webSocket$ = webSocket({
         url: 'ws://localhost:3000',
@@ -35,7 +37,9 @@ export class WebSocketService {
           next: () => {
             console.log('WebSocket connection closed');
             this.isConnectedSubject.next(false);
-            this.reconnect();
+            if (!this.intentionalDisconnect) {
+              this.reconnect();
+            }
           }
         }
       });
@@ -53,23 +57,27 @@ export class WebSocketService {
         error: (error) => {
           console.error('WebSocket error:', error);
           this.isConnectedSubject.next(false);
-          this.reconnect();
+          if (!this.intentionalDisconnect) {
+            this.reconnect();
+          }
         },
         complete: () => {
           console.log('WebSocket connection completed');
           this.isConnectedSubject.next(false);
-          this.reconnect();
+          if (!this.intentionalDisconnect) {
+            this.reconnect();
+          }
         }
       });
     }
   }
 
   private reconnect(): void {
-    if (!this.reconnectSubscription) {
+    if (!this.reconnectSubscription && !this.intentionalDisconnect) {
       console.log('Starting reconnection attempts...');
       this.reconnectSubscription = timer(0, 3000).subscribe(() => {
         console.log('Attempting to reconnect...');
-        if (!this.isConnectedSubject.value) {
+        if (!this.isConnectedSubject.value && !this.intentionalDisconnect) {
           if (this.webSocket$) {
             this.webSocket$.complete();
             this.webSocket$ = null;
@@ -94,7 +102,8 @@ export class WebSocketService {
   }
 
   public disconnect(): void {
-    console.log("Disconnect activated.")
+    console.log("Disconnect activated.");
+    this.intentionalDisconnect = true;
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -105,6 +114,9 @@ export class WebSocketService {
       this.webSocket$.complete();
     }
     this.isConnectedSubject.next(false);
+    this.webSocket$ = null;
+    this.subscription = null;
+    this.reconnectSubscription = null;
   }
 
   public sendMessage(message: any): void {
@@ -113,14 +125,16 @@ export class WebSocketService {
       console.log("Logged in email sent:", message);
     } else {
       console.error("WebSocket is not connected");
-      // If not connected, try to reconnect and send the message
-      this.connect();
-      setTimeout(() => {
-        if (this.webSocket$ && !this.webSocket$.closed) {
-          this.webSocket$.next(message);
-          console.log("Logged in email sent after reconnection:", message);
-        }
-      }, 1000);
+      // If not connected and not intentionally disconnected, try to reconnect and send the message
+      if (!this.intentionalDisconnect) {
+        this.connect();
+        setTimeout(() => {
+          if (this.webSocket$ && !this.webSocket$.closed) {
+            this.webSocket$.next(message);
+            console.log("Logged in email sent after reconnection:", message);
+          }
+        }, 1000);
+      }
     }
   }
 }

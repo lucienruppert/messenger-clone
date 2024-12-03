@@ -12,8 +12,8 @@
 [x] Store them in the backend
 
 [x] On delete remove the client's email from the array
-[ ] Connect to the server only after login, not when opening the website in the browser
-[ ] Fix new connection opening after logout.
+[x] Connect to the server only after login, not when opening the website in the browser
+[x] Fix new connection opening after logout.
 [ ]
 
 

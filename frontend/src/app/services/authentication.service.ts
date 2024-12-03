@@ -56,9 +56,10 @@ export class AuthenticationService {
   }
 
   public logout(): void {
+    console.log("Logging out and disconnecting WebSocket...");
     this.logoutonClient();
     this.logoutOnServer();
-    this.webSocketService.disconnect();
+    this.webSocketService.disconnect(); 
     this.router.navigate(['/']);
   }
 
@@ -70,7 +71,7 @@ export class AuthenticationService {
     try {
       const result$ = this.http.post(`${this.baseUrl}/logout`, {});
       const response = await firstValueFrom(result$);
-      console.log(response);
+      console.log('Logout response:', response);
     } catch (error) {
       console.error('Error logging out:', error);
     }
