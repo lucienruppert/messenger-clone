@@ -4,6 +4,7 @@ import WebSocket from 'ws';
 import * as http from 'http';
 
 const clients = new Set<WebSocket>();
+const emailStore: { [email: string]: WebSocket } = {};
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,12 +18,31 @@ async function bootstrap() {
     console.log(`New connection opened. Number of clients: ${clients.size}`);
 
     ws.on('message', (message) => {
-      console.log(`Received message: ${message}`);
-      ws.send(`Hello, you sent: ${message}`);
+      try {
+        const data = JSON.parse(message.toString());
+        if (data.type === 'login' && data.email) {
+          emailStore[data.email] = ws;
+          console.log(`Stored email: ${data.email}`);
+          ws.send(`Email stored successfully`);
+        } else {
+          console.log(`Received message: ${message}`);
+          ws.send(`Hello, you sent: ${message}`);
+        }
+      } catch (error) {
+        console.error('Error parsing message:', error);
+        ws.send('Invalid message format');
+      }
     });
 
     ws.on('close', () => {
       clients.delete(ws);
+      for (const email in emailStore) {
+        if (emailStore[email] === ws) {
+          delete emailStore[email];
+          console.log(`Removed email: ${email}`);
+          break;
+        }
+      }
       console.log(`Client disconnected. Total clients: ${clients.size}`);
     });
   });

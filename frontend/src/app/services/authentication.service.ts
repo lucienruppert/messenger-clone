@@ -75,6 +75,6 @@ export class AuthenticationService {
   }
 
   private sendEmailThroughWebSocket(email: string): void {
-    this.webSocketService.sendMessage({ email });
+    this.webSocketService.sendMessage({ type: 'login', email: email });
   }
 }

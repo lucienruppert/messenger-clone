@@ -4,7 +4,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { retry } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class WebSocketService {
   private isConnectedSubject = new BehaviorSubject<boolean>(false);
@@ -29,29 +29,29 @@ export class WebSocketService {
               this.reconnectSubscription.unsubscribe();
               this.reconnectSubscription = null;
             }
-          },
+          }
         },
         closeObserver: {
           next: () => {
             console.log('WebSocket connection closed');
             this.isConnectedSubject.next(false);
             this.reconnect();
-          },
-        },
+          }
+        }
       });
 
-      this.subscription = this.webSocket$
-        .pipe(retry({ delay: 3000 }))
-        .subscribe({
-          next: (message) => {
-            console.log('WebSocket message received:', message);
-          },
-          error: (error) => {
-            console.error('WebSocket error:', error);
-            this.isConnectedSubject.next(false);
-            this.reconnect();
-          },
-        });
+      this.subscription = this.webSocket$.pipe(
+        retry({ delay: 3000 })
+      ).subscribe({
+        next: (message) => {
+          console.log('WebSocket message received:', message);
+        },
+        error: (error) => {
+          console.error('WebSocket error:', error);
+          this.isConnectedSubject.next(false);
+          this.reconnect();
+        }
+      });
     }
   }
 
@@ -100,9 +100,9 @@ export class WebSocketService {
   public sendMessage(message: any): void {
     if (this.webSocket$ && !this.webSocket$.closed) {
       this.webSocket$.next(message);
-      console.log('logged in email sent:', message);
+      console.log("logged in email sent:", message);
     } else {
-      console.error('WebSocket is not connected');
+      console.error("WebSocket is not connected");
     }
   }
 }
