@@ -4,7 +4,7 @@ import WebSocket from 'ws';
 import * as http from 'http';
 
 const clients = new Set<WebSocket>();
-const emailStore: string[] = [];
+let emailStore: string[] = []; // Array to store all emails
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +17,7 @@ async function bootstrap() {
     clients.add(ws);
     console.log(`New connection opened. Number of clients: ${clients.size}`);
 
+    // Send initial connection acknowledgment
     ws.send(
       JSON.stringify({
         type: 'connection',
@@ -32,7 +33,7 @@ async function bootstrap() {
             emailStore.push(data.email);
             console.log(`Stored new email: ${data.email}`);
             console.log(`Total emails stored: ${emailStore.length}`);
-            console.log(`Current emails: ${emailStore}`);
+            console.log(`Current emails: ${emailStore.join(', ')}`);
           }
           ws.send(
             JSON.stringify({
@@ -41,6 +42,7 @@ async function bootstrap() {
               message: 'Email stored successfully',
             }),
           );
+          (ws as any).email = data.email;
 
           const heartbeatInterval = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
@@ -50,6 +52,7 @@ async function bootstrap() {
             }
           }, 30000);
 
+          // Clear interval when connection closes
           ws.on('close', () => {
             clearInterval(heartbeatInterval);
           });
@@ -75,8 +78,14 @@ async function bootstrap() {
 
     ws.on('close', () => {
       clients.delete(ws);
+      const email = (ws as any).email;
+      if (email) {
+        emailStore = emailStore.filter((emailItem) => emailItem !== email);
+        console.log(`Removed email: ${email}`);
+        console.log(`Total emails stored: ${emailStore.length}`);
+        console.log(`Current emails: ${emailStore.join(', ')}`);
+      }
       console.log(`Client disconnected. Total clients: ${clients.size}`);
-      console.log(`Current emails: ${emailStore}`);
     });
 
     ws.on('error', (error) => {
