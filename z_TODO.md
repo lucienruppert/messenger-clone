@@ -6,11 +6,22 @@
 [ ] Set up Node test 
 [ ] Set up Node backend and make it operational
 
+**Update message sending logic with name**
+
+[ ] Change user db to include name!!!
+[ ] After login get the name as well and save it to session storage
+[ ] Send name with the initial login data to the server
+[ ] Save the name as well in the client array
+
+**List all clients on the left side**
+
+[ ] On the server fetch names of all clients 
+[ ] Create backend endpoint to provide all clients
+[ ] Fetch list of all clients from the server
+[ ] Display all but own 
+
 **Initiating a chat with another client**
 
-[ ] List all clients on the left side
-      [ ]
-      
 [ ] Click option to open chat
 [ ] When sending the message, include the recipient's email in the messageData
 [ ] Finalize message type (and replace any)
