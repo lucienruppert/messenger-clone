@@ -69,3 +69,12 @@
 [x] On delete remove the client's email from the array
 [x] Connect to the server only after login, not when opening the website in the browser
 [x] Fix new connection opening after logout.
+
+**Update message sending logic with name**
+
+[x] Change user db to include name!!!
+[x] After login get the name as well
+[x] Save name to session storage
+[x] Send name with the initial login data to the server
+[x] Save the name as well in the users array
+
