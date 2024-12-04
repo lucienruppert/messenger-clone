@@ -21,10 +21,11 @@ export class WebSocketService {
       this.connect();
       // Get the stored email and send it after connection
       const email = sessionStorage.getItem('userEmail');
-      if (email) {
+      const name = sessionStorage.getItem('userName');
+      if (email && name) {
         // Wait a bit for the connection to establish before sending
         setTimeout(() => {
-          this.sendMessage({ type: 'login', email: email });
+          this.sendMessage({ type: 'login', email: email, name: name });
         }, 1000);
       }
     }
@@ -62,8 +63,11 @@ export class WebSocketService {
         next: (message) => {
           console.log('WebSocket message received:', message);
           // Keep the connection alive after receiving the response
-          if (typeof message === 'string' && message.includes('Email stored successfully')) {
+          if (message.type === 'login_response' && message.status === 'success') {
             console.log('Login successful, maintaining connection');
+          }
+          if (message.type === 'users') {
+            console.log('Users list received:', message.users);
           }
         },
         error: (error) => {
@@ -101,9 +105,10 @@ export class WebSocketService {
           this.connect();
           // Resend email after reconnection if available
           const email = sessionStorage.getItem('userEmail');
-          if (email) {
+          const name = sessionStorage.getItem('userName');
+          if (email && name) {
             setTimeout(() => {
-              this.sendMessage({ type: 'login', email: email });
+              this.sendMessage({ type: 'login', email: email, name: name });
             }, 1000);
           }
         } else {

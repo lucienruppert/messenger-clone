@@ -9,7 +9,7 @@ interface User {
 }
 
 const clients = new Set<WebSocket>();
-let usersStore: User[] = []; // Array to store all users
+let emailStore: User[] = []; // Array to store all users
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -44,19 +44,19 @@ async function bootstrap() {
             `Processing login for: ${incomingData.name} (${incomingData.email})`, // Test log
           );
 
-          const userExists = usersStore.some(
+          const userExists = emailStore.some(
             (user) => user.email === incomingData.email,
           );
           if (!userExists) {
-            usersStore.push({
+            emailStore.push({
               username: incomingData.name,
               email: incomingData.email,
             });
             console.log(
               `Stored new user: ${incomingData.name} (${incomingData.email})`,
             );
-            console.log(`Total users stored: ${usersStore.length}`);
-            console.log(`Current users: ${JSON.stringify(usersStore)}`);
+            console.log(`Total users stored: ${emailStore.length}`);
+            console.log(`Current users: ${JSON.stringify(emailStore)}`);
           } else {
             console.log(
               `User already exists: ${incomingData.name} (${incomingData.email})`, // Test log
@@ -73,6 +73,14 @@ async function bootstrap() {
             username: incomingData.name,
             email: incomingData.email,
           };
+
+          // Send current users to the client
+          ws.send(
+            JSON.stringify({
+              type: 'users',
+              users: emailStore,
+            }),
+          );
 
           const heartbeatInterval = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
@@ -110,12 +118,12 @@ async function bootstrap() {
       clients.delete(ws);
       const user = (ws as any).user;
       if (user) {
-        usersStore = usersStore.filter(
+        emailStore = emailStore.filter(
           (emailItem) => emailItem.email !== user.email,
         );
         console.log(`Removed user: ${user.username} (${user.email})`);
-        console.log(`Total users stored: ${usersStore.length}`);
-        console.log(`Current users: ${JSON.stringify(usersStore)}`); // Additional log
+        console.log(`Total users stored: ${emailStore.length}`);
+        console.log(`Current users: ${JSON.stringify(emailStore)}`); // Additional log
       }
       console.log(`Client disconnected. Total clients: ${clients.size}`);
     });
