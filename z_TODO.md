@@ -3,22 +3,23 @@
 [x] Register domain at dotroll
 [x] Wait for domain approval
 [x] Make sure SSL is live
-[ ] Set up Node test 
+[ ] Set up Node test
 [ ] Set up Node backend and make it operational
 
 **Update message sending logic with name**
 
-[ ] Change user db to include name!!!
-[ ] After login get the name as well and save it to session storage
+[x] Change user db to include name!!!
+[x] After login get the name as well
+[ ] Save name it to session storage
 [ ] Send name with the initial login data to the server
 [ ] Save the name as well in the client array
 
 **List all clients on the left side**
 
-[ ] On the server fetch names of all clients 
+[ ] On the server fetch names of all clients
 [ ] Create backend endpoint to provide all clients
 [ ] Fetch list of all clients from the server
-[ ] Display all but own 
+[ ] Display all but own
 
 **Initiating a chat with another client**
 
@@ -50,108 +51,106 @@
 [ ] On clicking on the person in the chatlist, chat history is loaded
 [ ] On scrolling back up more messages appear, use loading indicator
 
-
- 
-
-
 **Create and flow User information between backend and frontend**
 
-   [ ] Create User data model OK
-   [ ] Write a backend script that creates a new User entry in the database with hased password
-   [ ] Write a frontend service that gets this User's information from the database 
-   [ ] Modify the home component so that it display the received User data 
-   [ ] Build chat list component with virtual scrolling
-   [ ] Create chat window component
-   [ ] Implement message display with timestamps
-   [ ] Add message input and sending functionality
-   [ ] Implement responsive design with Tailwind
+[ ] Create User data model OK
+[ ] Write a backend script that creates a new User entry in the database with hased password
+[ ] Write a frontend service that gets this User's information from the database
+[ ] Modify the home component so that it display the received User data
+[ ] Build chat list component with virtual scrolling
+[ ] Create chat window component
+[ ] Implement message display with timestamps
+[ ] Add message input and sending functionality
+[ ] Implement responsive design with Tailwind
 
 **Backend API Development**
 
-   [ ] Implement User APIs (GET /users, GET /users/:id)
+[ ] Implement User APIs (GET /users, GET /users/:id)
 
-   [ ] Implement Chat APIs with pagination:
+[ ] Implement Chat APIs with pagination:
 
-   ```
-   GET /chats/:id/messages?before=timestamp&limit=50
-   ```
+```
+GET /chats/:id/messages?before=timestamp&limit=50
+```
 
-   [ ] Implement bulk operations:
+[ ] Implement bulk operations:
 
-   ```
-   POST /chats/:id/messages/seen
-   Body: { messageIds: string[] }
-   ```
+```
+POST /chats/:id/messages/seen
+Body: { messageIds: string[] }
+```
 
-   [ ] Implement message sending/receiving via WebSocket
+[ ] Implement message sending/receiving via WebSocket
 
+[ ] Remove 'role' from user schema-db-api-frontend flow
 
-   [ ] Remove 'role' from user schema-db-api-frontend flow
-
-   [ ] Fix authentication.service CookieService injection problem
+[ ] Fix authentication.service CookieService injection problem
 
 **Additional Features**
 
-   [ ] Authentication system
+[ ] Use ping/pong frames if supported by your WebSocket library (instead of Heartbeat)
+[ ] Heartbeat doesnt work, as when I go offline in a client, backend doesnt get this info.
 
-   [ ] File/image sharing
+[ ] Authentication system
 
-   [ ] Typing indicators
+[ ] File/image sharing
 
-   [ ] Online/offline status
+[ ] Typing indicators
 
-   [ ] Search functionality
+[ ] Online/offline status
 
-   [ ] Push notifications
+[ ] Search functionality
 
-   [ ] Implement client-side caching with IndexedDB
+[ ] Push notifications
 
-   [ ] Add error boundaries in components
+[ ] Implement client-side caching with IndexedDB
 
-   [ ] Integrate Winston for logging
+[ ] Add error boundaries in components
 
-   [ ] Set up Prometheus metrics
+[ ] Integrate Winston for logging
 
-   [ ] Configure Grafana dashboards
+[ ] Set up Prometheus metrics
 
-   [ ] Implement health checks
+[ ] Configure Grafana dashboards
 
-   [ ] Set up MongoDB backup procedures
+[ ] Implement health checks
 
-   [ ] Document deployment process
+[ ] Set up MongoDB backup procedures
 
-   [ ] Create monitoring dashboards
+[ ] Document deployment process
 
-   [ ] Implement Redis caching for chat history
+[ ] Create monitoring dashboards
 
-   [ ] Optimize virtual scrolling performance
+[ ] Implement Redis caching for chat history
 
-   [ ] Fine-tune IndexedDB caching strategy
+[ ] Optimize virtual scrolling performance
 
-   [ ] Set up API rate limiting
+[ ] Fine-tune IndexedDB caching strategy
 
-   [ ] Implement E2E tests with Cypress
+[ ] Set up API rate limiting
+
+[ ] Implement E2E tests with Cypress
 
 **Security Implementation**
 
-   [ ] User authentication with JWT
+[ ] User authentication with JWT
 
-   [ ] Rate limiting for API endpoints
+[ ] Rate limiting for API endpoints
 
-   [ ] Input validation and sanitization
+[ ] Input validation and sanitization
 
-   [ ] CORS configuration
+[ ] CORS configuration
 
-   [ ] Password hashing
+[ ] Password hashing
 
-   [ ] Request validation
+[ ] Request validation
 
 **Error Handling & Reliability**
 
-   [ ] Implement retry mechanism with exponential backoff
+[ ] Implement retry mechanism with exponential backoff
 
-   [ ] Add offline detection and recovery
+[ ] Add offline detection and recovery
 
-   [ ] Implement offline message queuing
+[ ] Implement offline message queuing
 
-   [ ] Add error indicators in UI
+[ ] Add error indicators in UI

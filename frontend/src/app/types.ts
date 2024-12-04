@@ -1,6 +1,7 @@
 export type User = {
   email: string;
   role: string;
+  name: string;
   errors?: Array<string>;
 };
 
