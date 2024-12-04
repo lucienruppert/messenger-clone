@@ -3,8 +3,13 @@ import { AppModule } from './app.module';
 import WebSocket from 'ws';
 import * as http from 'http';
 
+interface User {
+  username: string;
+  email: string;
+}
+
 const clients = new Set<WebSocket>();
-let emailStore: string[] = []; // Array to store all emails
+let emailStore: User[] = []; // Array to store all users
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -28,21 +33,46 @@ async function bootstrap() {
     ws.on('message', (message) => {
       try {
         const incomingData = JSON.parse(message.toString());
-        if (incomingData.type === 'login' && incomingData.email) {
-          if (!emailStore.includes(incomingData.email)) {
-            emailStore.push(incomingData.email);
-            console.log(`Stored new email: ${incomingData.email}`);
-            console.log(`Total emails stored: ${emailStore.length}`);
-            console.log(`Current emails: ${emailStore.join(', ')}`);
+        console.log(`Received message: ${JSON.stringify(incomingData)}`); // Test log
+
+        if (
+          incomingData.type === 'login' &&
+          incomingData.email &&
+          incomingData.name
+        ) {
+          console.log(
+            `Processing login for: ${incomingData.name} (${incomingData.email})`, // Test log
+          );
+
+          const userExists = emailStore.some(
+            (user) => user.email === incomingData.email,
+          );
+          if (!userExists) {
+            emailStore.push({
+              username: incomingData.name,
+              email: incomingData.email,
+            });
+            console.log(
+              `Stored new user: ${incomingData.name} (${incomingData.email})`,
+            );
+            console.log(`Total users stored: ${emailStore.length}`);
+            console.log(`Current users: ${JSON.stringify(emailStore)}`);
+          } else {
+            console.log(
+              `User already exists: ${incomingData.name} (${incomingData.email})`, // Test log
+            );
           }
           ws.send(
             JSON.stringify({
               type: 'login_response',
               status: 'success',
-              message: 'Email stored successfully',
+              message: 'User stored successfully',
             }),
           );
-          (ws as any).email = incomingData.email;
+          (ws as any).user = {
+            username: incomingData.name,
+            email: incomingData.email,
+          };
 
           const heartbeatInterval = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
@@ -57,7 +87,7 @@ async function bootstrap() {
             clearInterval(heartbeatInterval);
           });
         } else {
-          console.log(incomingData);
+          console.log(`Invalid login data: ${JSON.stringify(incomingData)}`); // Test log
           ws.send(
             JSON.stringify({
               type: 'message_response',
@@ -78,12 +108,14 @@ async function bootstrap() {
 
     ws.on('close', () => {
       clients.delete(ws);
-      const email = (ws as any).email;
-      if (email) {
-        emailStore = emailStore.filter((emailItem) => emailItem !== email);
-        console.log(`Removed email: ${email}`);
-        console.log(`Total emails stored: ${emailStore.length}`);
-        console.log(`Current emails: ${emailStore.join(', ')}`);
+      const user = (ws as any).user;
+      if (user) {
+        emailStore = emailStore.filter(
+          (emailItem) => emailItem.email !== user.email,
+        );
+        console.log(`Removed user: ${user.username} (${user.email})`);
+        console.log(`Total users stored: ${emailStore.length}`);
+        console.log(`Current users: ${JSON.stringify(emailStore)}`); // Additional log
       }
       console.log(`Client disconnected. Total clients: ${clients.size}`);
     });

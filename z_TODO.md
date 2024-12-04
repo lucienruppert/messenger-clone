@@ -11,8 +11,8 @@
 [x] Change user db to include name!!!
 [x] After login get the name as well
 [x] Save name to session storage
-[ ] Send name with the initial login data to the server
-[ ] Save the name as well in the client array
+[x] Send name with the initial login data to the server
+[ ] Save the name as well in the users array
 
 **List all clients on the left side**
 
