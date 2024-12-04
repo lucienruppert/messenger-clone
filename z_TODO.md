@@ -9,6 +9,8 @@
 **Initiating a chat with another client**
 
 [ ] List all clients on the left side
+      [ ]
+      
 [ ] Click option to open chat
 [ ] When sending the message, include the recipient's email in the messageData
 [ ] Finalize message type (and replace any)
