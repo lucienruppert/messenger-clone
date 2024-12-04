@@ -2,22 +2,42 @@
 
 [x] Register domain at dotroll
 [x] Wait for domain approval
-[ ] Make sure SSL is live
-[ ] Setup Node backend and make it operational
+[x] Make sure SSL is live
+[ ] Set up Node test 
+[ ] Set up Node backend and make it operational
 
-**Create messaging between the clients**
-
-[x] Küldhessen a cliens üzenetet a szerverre
-[x] If I refresh it disconnects connection
-[x] Resend emailt after refresh
-[x] When sending the message, always append the sender's email to it on the frontend and console.log it on the backend.
-[x] Store from which client-email the message came from and console.log it with the message received
-
-[ ] Finalize message type (and replace any)
-
-**....**
+**Initiating a chat with another client**
 
 [ ] List all clients on the left side
+[ ] Click option to open chat
+[ ] When sending the message, include the recipient's email in the messageData
+[ ] Finalize message type (and replace any)
+
+**Save message to the db and deliver message to recipient**
+
+[ ] Create chat messages table in mysql
+[ ] Set up ORM for nest.js
+[ ] Create insert to the db
+[ ] Save message to the db
+[ ] Send message to the recipient
+[ ] If the recipient is offline, the message stays in the database and is fetched when they reconnect.
+
+**Multiple chats from the same client**
+
+[ ] Make sure multiple chats work from the same client
+
+**Status updates**
+
+[ ] Update status when sent to the recipient
+[ ] Update status when seen by the recipient
+[ ] Update status on sender's computer
+
+**Chat history**
+
+[ ] On clicking on the person in the chatlist, chat history is loaded
+[ ] On scrolling back up more messages appear, use loading indicator
+
+
  
 
 

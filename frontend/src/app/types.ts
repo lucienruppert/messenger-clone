@@ -7,7 +7,8 @@ export type User = {
 export type MessageData = {
   id: string;
   chatId: string;
-  senderId: string;
+  senderEmail: string;
+  recipientEmail: string;
   message: string;
   timestamp: Date;
   status: 'sent' | 'delivered' | 'seen';
