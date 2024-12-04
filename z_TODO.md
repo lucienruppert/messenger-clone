@@ -10,7 +10,7 @@
 
 [x] Change user db to include name!!!
 [x] After login get the name as well
-[ ] Save name it to session storage
+[x] Save name to session storage
 [ ] Send name with the initial login data to the server
 [ ] Save the name as well in the client array
 

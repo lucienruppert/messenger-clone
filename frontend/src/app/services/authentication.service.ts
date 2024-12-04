@@ -36,7 +36,7 @@ export class AuthenticationService {
       this.setSessionState(true, email, userData.name);
       this.router.navigate(['/dashboard']);
       this.webSocketService.connect();
-      this.sendEmailThroughWebSocket(email);
+      this.sendUserDataThroughWebSocket(email, userData.name);
       return userData;
     } catch (error: unknown) {
       const typedError = error as HttpErrorResponse;
@@ -85,7 +85,7 @@ export class AuthenticationService {
     }
   }
 
-  private sendEmailThroughWebSocket(email: string): void {
-    this.webSocketService.sendMessage({ type: 'login', email });
+  private sendUserDataThroughWebSocket(email: string, name: string): void {
+    this.webSocketService.sendMessage({ type: 'login', email: email, name: name });
   }
 }
