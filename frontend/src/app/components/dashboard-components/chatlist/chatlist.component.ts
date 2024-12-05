@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { WebSocketService } from '../../../services/websocket.service';
 import { Subscription } from 'rxjs';
-import { User } from '../../../types';
+import { Partner } from '../../../types';
 
 @Component({
   selector: 'app-chatlist',
@@ -12,7 +12,7 @@ import { User } from '../../../types';
   imports: [CommonModule, NgFor],
 })
 export class ChatlistComponent implements OnInit, OnDestroy {
-  partners: User[] = [];
+  partners: Partner[] = [];
   private partnersSubscription: Subscription | null = null;
   private currentUserEmail: string | null = null;
 
@@ -24,7 +24,7 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.partnersSubscription = this.webSocketService
       .getPartners()
-      .subscribe((partners: User[]) => {
+      .subscribe((partners: Partner[]) => {
         console.log(
           'Raw partners data received:',
           JSON.stringify(partners, null, 2),
@@ -35,7 +35,6 @@ export class ChatlistComponent implements OnInit, OnDestroy {
             console.log(`Partner data:`, {
               email: partner.email,
               name: partner.name,
-              role: partner.role,
               isNotCurrentUser,
             });
             return isNotCurrentUser;

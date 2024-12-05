@@ -74,10 +74,6 @@ POST /chats/:id/messages/seen
 Body: { messageIds: string[] }
 ```
 
-[ ] Implement message sending/receiving via WebSocket
-
-[ ] Remove 'role' from user schema-db-api-frontend flow
-
 [ ] Fix authentication.service CookieService injection problem
 
 **Additional Features**

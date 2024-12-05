@@ -5,6 +5,11 @@ export type User = {
   errors?: Array<string>;
 };
 
+export type Partner = {
+  email: string;
+  name: string;
+};
+
 export type MessageData = {
   id: string;
   chatId: string;

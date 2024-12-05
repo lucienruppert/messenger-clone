@@ -4,12 +4,12 @@ import WebSocket from 'ws';
 import * as http from 'http';
 
 interface User {
-  name: string; // Updated to use name instead of username
+  name: string;
   email: string;
 }
 
 const clients = new Set<WebSocket>();
-let emailStore: User[] = []; // Array to store all users
+let emailStore: User[] = [];
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
