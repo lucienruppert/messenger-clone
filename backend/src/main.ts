@@ -33,7 +33,7 @@ async function bootstrap() {
     ws.on('message', (message) => {
       try {
         const incomingData = JSON.parse(message.toString());
-        console.log(`Received message: ${JSON.stringify(incomingData)}`); // Test log
+        console.log(`Received message: ${JSON.stringify(incomingData)}`);
 
         if (
           incomingData.type === 'login' &&
@@ -41,7 +41,7 @@ async function bootstrap() {
           incomingData.name
         ) {
           console.log(
-            `Processing login for: ${incomingData.name} (${incomingData.email})`, // Test log
+            `Processing login for: ${incomingData.name} (${incomingData.email})`,
           );
 
           const userExists = emailStore.some(
@@ -49,7 +49,7 @@ async function bootstrap() {
           );
           if (!userExists) {
             emailStore.push({
-              name: incomingData.name, // Updated to use name instead of username
+              name: incomingData.name,
               email: incomingData.email,
             });
             console.log(
@@ -59,7 +59,7 @@ async function bootstrap() {
             console.log(`Current users: ${JSON.stringify(emailStore)}`);
           } else {
             console.log(
-              `User already exists: ${incomingData.name} (${incomingData.email})`, // Test log
+              `User already exists: ${incomingData.name} (${incomingData.email})`,
             );
           }
           ws.send(
@@ -70,18 +70,10 @@ async function bootstrap() {
             }),
           );
           (ws as any).user = {
-            name: incomingData.name, // Updated to use name instead of username
+            name: incomingData.name,
             email: incomingData.email,
           };
 
-          // Send current users to the client
-          // ws.send(
-          //   JSON.stringify({
-          //     type: 'users',
-          //     users: emailStore,
-          //   }),
-          // );
-          // Broadcast updated users list to all clients
           clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
               client.send(
@@ -106,7 +98,7 @@ async function bootstrap() {
             clearInterval(heartbeatInterval);
           });
         } else {
-          console.log(`Invalid login data: ${JSON.stringify(incomingData)}`); // Test log
+          console.log(`Invalid login data: ${JSON.stringify(incomingData)}`);
           ws.send(
             JSON.stringify({
               type: 'message_response',
@@ -132,11 +124,10 @@ async function bootstrap() {
         emailStore = emailStore.filter(
           (emailItem) => emailItem.email !== user.email,
         );
-        console.log(`Removed user: ${user.name} (${user.email})`); // Updated to use name instead of username
+        console.log(`Removed user: ${user.name} (${user.email})`);
         console.log(`Total users stored: ${emailStore.length}`);
-        console.log(`Current users: ${JSON.stringify(emailStore)}`); // Additional log
+        console.log(`Current users: ${JSON.stringify(emailStore)}`);
 
-        // Broadcast updated users list to all clients
         clients.forEach((client) => {
           if (client.readyState === WebSocket.OPEN) {
             client.send(
