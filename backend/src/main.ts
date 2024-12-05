@@ -32,25 +32,25 @@ async function bootstrap() {
 
     ws.on('message', (message) => {
       try {
-        const incomingData = JSON.parse(message.toString());
-        console.log(`Received message: ${JSON.stringify(incomingData)}`);
+        const incomingMessage = JSON.parse(message.toString());
+        console.log(`Received message: ${JSON.stringify(incomingMessage)}`);
 
-        switch (incomingData.type) {
+        switch (incomingMessage.type) {
           case 'login':
-            if (incomingData.email && incomingData.name) {
+            if (incomingMessage.email && incomingMessage.name) {
               const userExists = emailStore.some(
-                (user) => user.email === incomingData.email,
+                (user) => user.email === incomingMessage.email,
               );
               if (!userExists) {
                 emailStore.push({
-                  name: incomingData.name,
-                  email: incomingData.email,
+                  name: incomingMessage.name,
+                  email: incomingMessage.email,
                 });
                 console.log(`Total users stored: ${emailStore.length}`);
                 console.log(`Current users: ${JSON.stringify(emailStore)}`);
               } else {
                 console.log(
-                  `User already exists: ${incomingData.name} (${incomingData.email})`,
+                  `User already exists: ${incomingMessage.name} (${incomingMessage.email})`,
                 );
               }
               ws.send(
@@ -61,8 +61,8 @@ async function bootstrap() {
                 }),
               );
               (ws as any).user = {
-                name: incomingData.name,
-                email: incomingData.email,
+                name: incomingMessage.name,
+                email: incomingMessage.email,
               };
 
               clients.forEach((client) => {
@@ -90,7 +90,7 @@ async function bootstrap() {
               });
             } else {
               console.log(
-                `Invalid login data: ${JSON.stringify(incomingData)}`,
+                `Invalid login data: ${JSON.stringify(incomingMessage)}`,
               );
               ws.send(
                 JSON.stringify({
@@ -100,6 +100,7 @@ async function bootstrap() {
               );
             }
             break;
+
           case 'chat':
             ws.send(
               JSON.stringify({
@@ -108,9 +109,10 @@ async function bootstrap() {
               }),
             );
             break;
+
           default:
             console.log(
-              `Unknown message type: ${JSON.stringify(incomingData)}`,
+              `Unknown message type: ${JSON.stringify(incomingMessage)}`,
             );
             ws.send(
               JSON.stringify({

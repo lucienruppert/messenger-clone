@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { WebSocketService } from '../../../services/websocket.service';
 import { ChatService } from '../../../services/chat.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Partner } from '../../../types';
 
 @Component({
@@ -16,10 +16,11 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   partners: Partner[] = [];
   private partnersSubscription: Subscription | null = null;
   private currentUserEmail: string | null = null;
+  public activePartner: string | null = null;
 
   constructor(
     private webSocketService: WebSocketService,
-    private chatService: ChatService
+    private chatService: ChatService,
   ) {
     this.currentUserEmail = sessionStorage.getItem('userEmail');
     console.log('Current user email:', this.currentUserEmail);
@@ -48,6 +49,7 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   }
 
   setActiveChat(partnerEmail: string) {
+    this.activePartner = partnerEmail;
     this.chatService.setActiveChat(partnerEmail);
   }
 }
