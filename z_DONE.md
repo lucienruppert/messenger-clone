@@ -85,3 +85,21 @@
 [x] When the userStore data changes on the server, send down the updated userStore  to the client as well and update its local variable
 [x] Subscribe to this data flow
 [x] Display all but own user name
+
+**Move Node backend from Railway to dotRoll**
+
+[x] Register domain at dotroll
+[x] Wait for domain approval
+[x] Make sure SSL is live
+[x] Set up Node test
+[x] Set up nest.js test
+[x] Set up Node backend and make it operational
+
+**Initiating a chat with another client**
+
+[x] Click option to open chat - change style + create activeChat variable and put the users email in it
+[x] Create Message types
+[x] Extract activePartner to a service
+[x] When sending the message, include the recipient's email in the messageData
+[x] Standardize message type across the application
+
