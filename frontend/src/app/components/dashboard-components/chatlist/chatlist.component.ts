@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { WebSocketService } from '../../../services/websocket.service';
+import { ChatService } from '../../../services/chat.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Partner } from '../../../types';
 
@@ -16,14 +17,10 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   private partnersSubscription: Subscription | null = null;
   private currentUserEmail: string | null = null;
 
-  private activePartnerSubject = new BehaviorSubject<string | null>(null);
-  activePartner$ = this.activePartnerSubject.asObservable();
-
-  get activePartner(): string | null {
-    return this.activePartnerSubject.value;
-  }
-
-  constructor(private webSocketService: WebSocketService) {
+  constructor(
+    private webSocketService: WebSocketService,
+    private chatService: ChatService
+  ) {
     this.currentUserEmail = sessionStorage.getItem('userEmail');
     console.log('Current user email:', this.currentUserEmail);
   }
@@ -51,7 +48,6 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   }
 
   setActiveChat(partnerEmail: string) {
-    this.activePartnerSubject.next(partnerEmail);
-    console.log('Active chat set to:', this.activePartner);
+    this.chatService.setActiveChat(partnerEmail);
   }
 }

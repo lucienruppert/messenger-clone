@@ -15,6 +15,11 @@
 [ ] When sending the message, include the recipient's email in the messageData
 [ ] Finalize message type (and replace any)
 
+**FIX**
+
+[ ] 
+
+
 **Save message to the db and deliver message to recipient**
 
 [ ] Create chat messages table in mysql
