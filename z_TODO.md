@@ -13,7 +13,7 @@
 [x] Create Message types
 [x] Extract activePartner to a service
 [x] When sending the message, include the recipient's email in the messageData
-[ ] Finalize sent message on the frontend
+[x] Standardize message type across the application
 
 **Chatlist redesign**
 
@@ -32,7 +32,7 @@
 
 **FIX**
 
-[ ] 
+[ ] Mi van, ha egy user több helyen is belogol. Működjön így is.
 
 **KÉSŐBB**
 

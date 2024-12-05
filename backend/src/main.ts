@@ -37,20 +37,20 @@ async function bootstrap() {
 
         switch (incomingMessage.type) {
           case 'login':
-            if (incomingMessage.email && incomingMessage.name) {
+            if (incomingMessage.senderEmail && incomingMessage.name) {
               const userExists = emailStore.some(
-                (user) => user.email === incomingMessage.email,
+                (user) => user.email === incomingMessage.senderEmail,
               );
               if (!userExists) {
                 emailStore.push({
                   name: incomingMessage.name,
-                  email: incomingMessage.email,
+                  email: incomingMessage.senderEmail,
                 });
                 console.log(`Total users stored: ${emailStore.length}`);
                 console.log(`Current users: ${JSON.stringify(emailStore)}`);
               } else {
                 console.log(
-                  `User already exists: ${incomingMessage.name} (${incomingMessage.email})`,
+                  `User already exists: ${incomingMessage.name} (${incomingMessage.senderEmail})`,
                 );
               }
               ws.send(
@@ -62,7 +62,7 @@ async function bootstrap() {
               );
               (ws as any).user = {
                 name: incomingMessage.name,
-                email: incomingMessage.email,
+                email: incomingMessage.senderEmail,
               };
 
               clients.forEach((client) => {

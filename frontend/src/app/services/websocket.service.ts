@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription, timer } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { retry } from 'rxjs/operators';
-import { Partner } from '../types';
+import { Partner, Message } from '../types';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { Partner } from '../types';
 export class WebSocketService {
   private isConnectedSubject = new BehaviorSubject<boolean>(false);
   public isConnected$ = this.isConnectedSubject.asObservable();
-  private webSocket$: WebSocketSubject<any> | null = null;
+  private webSocket$: WebSocketSubject<Message> | null = null;
   private subscription: Subscription | null = null;
   private reconnectSubscription: Subscription | null = null;
   private intentionalDisconnect: boolean = false;
@@ -27,7 +27,7 @@ export class WebSocketService {
       if (email && name) {
         // Wait a bit for the connection to establish before sending
         setTimeout(() => {
-          this.sendMessage({ type: 'login', email: email, name: name });
+          this.sendMessage({ type: 'login', senderEmail: email, name: name });
         }, 1000);
       }
     }
@@ -36,7 +36,7 @@ export class WebSocketService {
   public connect(): void {
     this.intentionalDisconnect = false;
     if (!this.webSocket$ || this.webSocket$.closed) {
-      this.webSocket$ = webSocket({
+      this.webSocket$ = webSocket<Message>({
         url: 'ws://localhost:3000',
         openObserver: {
           next: () => {
@@ -68,7 +68,7 @@ export class WebSocketService {
           if (message.type === 'loginResponse') {
             console.log('loginResponse received:', message);
           }
-          if (message.type === 'users') {
+          if (message.type === 'users' && message.users) {
             console.log('Users list received:', message.users);
             this.partners.next(message.users);
           }
@@ -111,7 +111,7 @@ export class WebSocketService {
           const name = sessionStorage.getItem('userName');
           if (email && name) {
             setTimeout(() => {
-              this.sendMessage({ type: 'login', email, name });
+              this.sendMessage({ type: 'login', senderEmail: email, name: name });
             }, 1000);
           }
         } else {
@@ -146,7 +146,7 @@ export class WebSocketService {
     this.reconnectSubscription = null;
   }
 
-  public sendMessage(message: any): void {
+  public sendMessage(message: Message): void {
     if (this.webSocket$ && !this.webSocket$.closed) {
       this.webSocket$.next(message);
       console.log("Message sent:", message);

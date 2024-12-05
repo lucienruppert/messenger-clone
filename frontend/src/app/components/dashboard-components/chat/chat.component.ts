@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { WebSocketService } from '../../../services/websocket.service';
 import { ChatService } from '../../../services/chat.service';
 import { Subscription } from 'rxjs';
+import { Message } from '../../../types';
 
 @Component({
   selector: 'app-chat',
@@ -36,10 +37,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   public sendMessage(event: Event) {
     event.preventDefault();
     const email = sessionStorage.getItem('userEmail');
+    console.log('partner', this.activePartner);
     if (email && this.activePartner) {
-      const messagePayload = {
-        id: crypto.randomUUID(),
-        chatId: crypto.randomUUID(),
+      const messagePayload: Message = {
         senderEmail: email,
         recipientEmail: this.activePartner,
         type: 'chat',

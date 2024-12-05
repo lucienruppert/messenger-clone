@@ -16,7 +16,9 @@ export type Message = {
   senderEmail: string;
   recipientEmail?: string;
   type: 'login' | 'loginResponse' | 'chat' | 'heartbeat' | 'error' | 'connection' | 'users';
-  message: string;
-  timestamp?: Date;
+  message?: string;
+  users?: Partner[];
+  name?: string;
+  timestamp?: number;
   status?: 'sent' | 'delivered' | 'seen';
 };

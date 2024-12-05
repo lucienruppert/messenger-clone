@@ -22,7 +22,6 @@ export class AuthenticationService {
   ) {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
     const storedEmail = sessionStorage.getItem('userEmail') || '';
-    const storedUserName = sessionStorage.getItem('userName') || '';
     this.isLoggedIn$.next(isLoggedIn);
     this.emailSubject.next(storedEmail);
   }
@@ -86,6 +85,6 @@ export class AuthenticationService {
   }
 
   private sendUserDataThroughWebSocket(email: string, name: string): void {
-    this.webSocketService.sendMessage({ type: 'login', email: email, name: name });
+    this.webSocketService.sendMessage({ type: 'login', senderEmail: email, name });
   }
 }
