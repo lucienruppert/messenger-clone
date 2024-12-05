@@ -3,7 +3,7 @@
 
   <!-- Debug info -->
   <div *ngIf="partners.length === 0" class="text-gray-500 mb-4">
-    No partners available
+    Senki sincs online. :(
   </div>
 
   <!-- Partners list -->
@@ -11,7 +11,6 @@
     <li *ngFor="let partner of partners"
         class="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer">
       <div class="font-medium">{{ partner.name }}</div>
-      <div class="text-sm text-gray-500">{{ partner.email }}</div>
     </li>
   </ul>
 </div>
