@@ -101,9 +101,6 @@ async function bootstrap() {
             }
             break;
           case 'chat':
-            console.log(
-              `Chat message received: ${JSON.stringify(incomingData)}`,
-            );
             ws.send(
               JSON.stringify({
                 type: 'messageResponse',

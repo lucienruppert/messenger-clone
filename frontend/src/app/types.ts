@@ -15,7 +15,7 @@ export type Message = {
   chatId?: string;
   senderEmail: string;
   recipientEmail?: string;
-  messageType: 'login' | 'loginResponse' | 'chat';
+  messageType: 'login' | 'loginResponse' | 'chat' | 'heartbeat' | 'error' | 'connection' | 'users';
   message: string;
   timestamp?: Date;
   status?: 'sent' | 'delivered' | 'seen';
