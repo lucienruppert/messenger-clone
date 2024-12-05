@@ -70,7 +70,7 @@ async function bootstrap() {
             }),
           );
           (ws as any).user = {
-            name: incomingData.name, // Updated to use name instead of username
+            name: incomingData.name,
             email: incomingData.email,
           };
 
@@ -121,9 +121,9 @@ async function bootstrap() {
         emailStore = emailStore.filter(
           (emailItem) => emailItem.email !== user.email,
         );
-        console.log(`Removed user: ${user.name} (${user.email})`); // Updated to use name instead of username
+        console.log(`Removed user: ${user.name} (${user.email})`);
         console.log(`Total users stored: ${emailStore.length}`);
-        console.log(`Current users: ${JSON.stringify(emailStore)}`); // Additional log
+        console.log(`Current users: ${JSON.stringify(emailStore)}`);
       }
       console.log(`Client disconnected. Total clients: ${clients.size}`);
     });
