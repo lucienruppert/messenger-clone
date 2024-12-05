@@ -1,3 +1,17 @@
-<p>
-  chatlist works!
-</p>
+<div class="p-4">
+  <h2 class="text-xl font-semibold mb-4">Chat Partners</h2>
+
+  <!-- Debug info -->
+  <div *ngIf="partners.length === 0" class="text-gray-500 mb-4">
+    No partners available
+  </div>
+
+  <!-- Partners list -->
+  <ul class="space-y-2">
+    <li *ngFor="let partner of partners"
+        class="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer">
+      <div class="font-medium">{{ partner.name }}</div>
+      <div class="text-sm text-gray-500">{{ partner.email }}</div>
+    </li>
+  </ul>
+</div>

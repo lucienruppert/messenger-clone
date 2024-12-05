@@ -10,10 +10,10 @@
 **List all clients on the left side**
 
 [x] After login send down the usersStore to all clients
-[ ] Save the users data into a local variable upon receipt
+[x] Save the users data into a local variable upon receipt
 [ ] When the userStore data changes on the server, send down the updated userStore  to the client as well and update its local variable
-[ ] Subscribe to this data flow
-[ ] Display all but own user name
+[x] Subscribe to this data flow
+[x] Display all but own user name
 
 **Initiating a chat with another client**
 
