@@ -75,12 +75,23 @@ async function bootstrap() {
           };
 
           // Send current users to the client
-          ws.send(
-            JSON.stringify({
-              type: 'users',
-              users: emailStore,
-            }),
-          );
+          // ws.send(
+          //   JSON.stringify({
+          //     type: 'users',
+          //     users: emailStore,
+          //   }),
+          // );
+          // Broadcast updated users list to all clients
+          clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+              client.send(
+                JSON.stringify({
+                  type: 'users',
+                  users: emailStore,
+                }),
+              );
+            }
+          });
 
           const heartbeatInterval = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
