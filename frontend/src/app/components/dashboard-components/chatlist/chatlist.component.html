@@ -2,15 +2,20 @@
   <h2 class="text-xl font-semibold mb-4">Chat Partners</h2>
 
   <!-- Debug info -->
-  <div *ngIf="partners.length === 0" class="text-gray-500 mb-4">
-    Senki sincs online. :(
+  <div class="text-gray-500 mb-4">
+    Partners count: {{ partners.length }}
   </div>
 
   <!-- Partners list -->
   <ul class="space-y-2">
-    <li *ngFor="let partner of partners"
+    <li *ngFor="let partner of partners; let i = index"
         class="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer">
-      <div class="font-medium">{{ partner.name }}</div>
+      <div class="font-medium">{{ i + 1 }}. {{ partner.name }} ({{ partner.email }})</div>
     </li>
   </ul>
+
+  <!-- No partners message -->
+  <div *ngIf="partners.length === 0" class="text-gray-500 mb-4">
+    No one is online :(
+  </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { WebSocketService } from '../../../services/websocket.service';
 import { Subscription } from 'rxjs';
 import { User } from '../../../types';
@@ -9,7 +9,7 @@ import { User } from '../../../types';
   templateUrl: './chatlist.component.html',
   styleUrls: ['./chatlist.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, NgFor],
 })
 export class ChatlistComponent implements OnInit, OnDestroy {
   partners: User[] = [];
@@ -23,21 +23,34 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.partnersSubscription = this.webSocketService.getPartners().subscribe((partners: User[]) => {
-      console.log('Received all partners:', partners);
-      // Filter out the current user from the partners list
-      if (this.currentUserEmail) {
-        this.partners = partners.filter(partner => {
-          const isNotCurrentUser = partner.email !== this.currentUserEmail;
-          console.log(`Partner ${partner.email} isNotCurrentUser: ${isNotCurrentUser}`);
-          return isNotCurrentUser;
-        });
-      } else {
-        console.warn('No current user email found in session storage');
-        this.partners = partners;
-      }
-      console.log('Filtered partners list:', this.partners);
-    });
+    this.partnersSubscription = this.webSocketService
+      .getPartners()
+      .subscribe((partners: User[]) => {
+        console.log(
+          'Raw partners data received:',
+          JSON.stringify(partners, null, 2),
+        );
+        // Filter out the current user from the partners list
+        if (this.currentUserEmail) {
+          this.partners = partners.filter((partner) => {
+            const isNotCurrentUser = partner.email !== this.currentUserEmail;
+            console.log(`Partner data:`, {
+              email: partner.email,
+              name: partner.name,
+              role: partner.role,
+              isNotCurrentUser,
+            });
+            return isNotCurrentUser;
+          });
+        } else {
+          console.warn('No current user email found in session storage');
+          this.partners = partners;
+        }
+        console.log(
+          'Final filtered partners list:',
+          JSON.stringify(this.partners, null, 2),
+        );
+      });
   }
 
   ngOnDestroy() {
