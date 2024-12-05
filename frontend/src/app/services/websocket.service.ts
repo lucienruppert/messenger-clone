@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription, timer } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { retry } from 'rxjs/operators';
+import { Partner } from '../types';
 
 @Injectable({
   providedIn: 'root'
@@ -105,12 +106,12 @@ export class WebSocketService {
             this.subscription = null;
           }
           this.connect();
-          // Resend email after reconnection if available
+          // Resend login data after reconnection if available
           const email = sessionStorage.getItem('userEmail');
           const name = sessionStorage.getItem('userName');
           if (email && name) {
             setTimeout(() => {
-              this.sendMessage({ type: 'login', email: email, name: name });
+              this.sendMessage({ type: 'login', email, name });
             }, 1000);
           }
         } else {
@@ -164,7 +165,7 @@ export class WebSocketService {
     }
   }
 
-  public getPartners(): Observable<any[]> {
-    return this.partners.asObservable(); // Provide an observable for partners
+  public getPartners(): Observable<Partner[]> {
+    return this.partners.asObservable();
   }
 }
