@@ -4,12 +4,12 @@ import WebSocket from 'ws';
 import * as http from 'http';
 
 interface User {
-  name: string; // Updated to use name instead of username
+  name: string;
   email: string;
 }
 
 const clients = new Set<WebSocket>();
-let emailStore: User[] = []; // Array to store all users
+let emailStore: User[] = [];
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -40,10 +40,6 @@ async function bootstrap() {
           incomingData.email &&
           incomingData.name
         ) {
-          console.log(
-            `Processing login for: ${incomingData.name} (${incomingData.email})`,
-          );
-
           const userExists = emailStore.some(
             (user) => user.email === incomingData.email,
           );
@@ -52,9 +48,6 @@ async function bootstrap() {
               name: incomingData.name,
               email: incomingData.email,
             });
-            console.log(
-              `Stored new user: ${incomingData.name} (${incomingData.email})`,
-            );
             console.log(`Total users stored: ${emailStore.length}`);
             console.log(`Current users: ${JSON.stringify(emailStore)}`);
           } else {
@@ -64,7 +57,7 @@ async function bootstrap() {
           }
           ws.send(
             JSON.stringify({
-              type: 'login_response',
+              type: 'loginResponse',
               status: 'success',
               message: 'User stored successfully',
             }),

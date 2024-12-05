@@ -10,7 +10,7 @@
 **Initiating a chat with another client**
 
 [x] Click option to open chat - change style + create activeChat variable and put the users email in it
-[ ] Create Message types
+[x] Create Message types
 
 [ ] When sending the message, include the recipient's email in the messageData
 [ ] Finalize message type (and replace any)

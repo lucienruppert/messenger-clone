@@ -11,11 +11,12 @@ export type Partner = {
 };
 
 export type Message = {
-  id: string;
-  chatId: string;
+  id?: string;
+  chatId?: string;
   senderEmail: string;
-  recipientEmail: string;
+  recipientEmail?: string;
+  messageType: 'login' | 'loginResponse' | 'chat';
   message: string;
-  timestamp: Date;
-  status: 'sent' | 'delivered' | 'seen';
+  timestamp?: Date;
+  status?: 'sent' | 'delivered' | 'seen';
 };

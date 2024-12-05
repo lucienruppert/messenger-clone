@@ -14,8 +14,8 @@ export class WebSocketService {
   private subscription: Subscription | null = null;
   private reconnectSubscription: Subscription | null = null;
   private intentionalDisconnect: boolean = false;
-  private partners = new BehaviorSubject<any[]>([]); // Initialize partners as a BehaviorSubject
-
+  private partners = new BehaviorSubject<any[]>([]);
+  
   constructor() {
     // Check if user is logged in and connect if they are
     const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
@@ -65,7 +65,7 @@ export class WebSocketService {
         next: (message) => {
           console.log('WebSocket message received:', message);
           // Keep the connection alive after receiving the response
-          if (message.type === 'login_response' && message.status === 'success') {
+          if (message.type === 'loginResponse' && message.status === 'success') {
           }
           if (message.type === 'users') {
             console.log('Users list received:', message.users);
