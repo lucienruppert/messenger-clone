@@ -10,7 +10,7 @@ export type Partner = {
   name: string;
 };
 
-export type MessageData = {
+export type Message = {
   id: string;
   chatId: string;
   senderEmail: string;

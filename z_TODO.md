@@ -7,17 +7,9 @@
 [x] Set up nest.js test
 [ ] Set up Node backend and make it operational
 
-**List all clients on the left side**
-
-[x] After login send down the usersStore to all clients
-[x] Save the users data into a local variable upon receipt
-[ ] When the userStore data changes on the server, send down the updated userStore  to the client as well and update its local variable
-[x] Subscribe to this data flow
-[x] Display all but own user name
-
 **Initiating a chat with another client**
 
-[ ] Click option to open chat
+[x] Click option to open chat - change style + create activeChat variable and put the users email in it
 [ ] When sending the message, include the recipient's email in the messageData
 [ ] Finalize message type (and replace any)
 

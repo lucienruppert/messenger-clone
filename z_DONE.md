@@ -78,3 +78,10 @@
 [x] Send name with the initial login data to the server
 [x] Save the name as well in the users array
 
+**List all clients on the left side**
+
+[x] After login send down the usersStore to all clients
+[x] Save the users data into a local variable upon receipt
+[x] When the userStore data changes on the server, send down the updated userStore  to the client as well and update its local variable
+[x] Subscribe to this data flow
+[x] Display all but own user name
