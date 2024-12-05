@@ -66,7 +66,6 @@ export class WebSocketService {
           console.log('WebSocket message received:', message);
           // Keep the connection alive after receiving the response
           if (message.type === 'login_response' && message.status === 'success') {
-            console.log('Login successful, maintaining connection');
           }
           if (message.type === 'users') {
             console.log('Users list received:', message.users);

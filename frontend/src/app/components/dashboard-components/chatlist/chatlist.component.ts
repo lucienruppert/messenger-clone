@@ -25,28 +25,15 @@ export class ChatlistComponent implements OnInit, OnDestroy {
     this.partnersSubscription = this.webSocketService
       .getPartners()
       .subscribe((partners: Partner[]) => {
-        console.log(
-          'Raw partners data received:',
-          JSON.stringify(partners, null, 2),
-        );
         if (this.currentUserEmail) {
           this.partners = partners.filter((partner) => {
             const isNotCurrentUser = partner.email !== this.currentUserEmail;
-            console.log(`Partner data:`, {
-              email: partner.email,
-              name: partner.name,
-              isNotCurrentUser,
-            });
             return isNotCurrentUser;
           });
         } else {
           console.warn('No current user email found in session storage');
           this.partners = partners;
         }
-        console.log(
-          'Final filtered partners list:',
-          JSON.stringify(this.partners, null, 2),
-        );
       });
   }
 
