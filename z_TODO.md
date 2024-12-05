@@ -13,15 +13,15 @@
 [x] Create Message types
 [x] Extract activePartner to a service
 [x] When sending the message, include the recipient's email in the messageData
-[ ] Fix response content
-[ ] Finalize message type (and replace any)
+[ ] Finalize sent message on the frontend
 
-**FIX**
+**Chatlist redesign**
 
-[ ] 
-
+[ ] Minden résztvevő neve legyen ott a chatben mindig.
 
 **Save message to the db and deliver message to recipient**
+
+[ ] When a message received for a specific pair, add a UUID and save it to the database
 
 [ ] Create chat messages table in mysql
 [ ] Set up ORM for nest.js
@@ -29,6 +29,16 @@
 [ ] Save message to the db
 [ ] Send message to the recipient
 [ ] If the recipient is offline, the message stays in the database and is fetched when they reconnect.
+
+**FIX**
+
+[ ] 
+
+**KÉSŐBB**
+
+[ ] Lehessen törölni vagy arhiválni a beszélgetést
+
+
 
 [ ] When clicked on the name, download and display last 10 messages
 

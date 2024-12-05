@@ -36,14 +36,18 @@ export class ChatComponent implements OnInit, OnDestroy {
   public sendMessage(event: Event) {
     event.preventDefault();
     const email = sessionStorage.getItem('userEmail');
-    console.log('this.activePartner', this.activePartner)
     if (email && this.activePartner) {
-      this.webSocket.sendMessage({
-        message: this.messageInput,
+      const messagePayload = {
+        id: crypto.randomUUID(),
+        chatId: crypto.randomUUID(),
         senderEmail: email,
         recipientEmail: this.activePartner,
-        type: 'chat'
-      });
+        type: 'chat',
+        message: this.messageInput,
+        timestamp: Date.now(),
+        status: 'sent'
+      };
+      this.webSocket.sendMessage(messagePayload);
     } else {
       console.error('User email or active partner not found');
     }
