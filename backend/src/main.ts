@@ -26,7 +26,7 @@ async function bootstrap() {
     ws.send(
       JSON.stringify({
         type: 'connection',
-        status: 'connected',
+        message: 'You are connected',
       }),
     );
 

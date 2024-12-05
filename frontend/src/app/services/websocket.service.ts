@@ -14,7 +14,7 @@ export class WebSocketService {
   private subscription: Subscription | null = null;
   private reconnectSubscription: Subscription | null = null;
   private intentionalDisconnect: boolean = false;
-  private partners = new BehaviorSubject<any[]>([]);
+  private partners = new BehaviorSubject<Partner[]>([]);
 
   constructor() {
     // Check if user is logged in and connect if they are
@@ -70,7 +70,7 @@ export class WebSocketService {
           }
           if (message.type === 'users') {
             console.log('Users list received:', message.users);
-            this.partners.next(message.users); 
+            this.partners.next(message.users);
           }
         },
         error: (error) => {
