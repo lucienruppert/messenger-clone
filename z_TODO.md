@@ -144,7 +144,13 @@ Body: { messageIds: string[] }
 [ ] Implement retry mechanism with exponential backoff
 
 [ ] Add offline detection and recovery
-
+ OK tea
 [ ] Implement offline message queuing
 
 [ ] Add error indicators in UI
+
+**Create chatbot**
+
+[ ] Randi-gyakorlás
+[ ] Flört, szex
+

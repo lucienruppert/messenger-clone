@@ -13,6 +13,7 @@ export class WebSocketService {
   private subscription: Subscription | null = null;
   private reconnectSubscription: Subscription | null = null;
   private intentionalDisconnect: boolean = false;
+  private partners = new BehaviorSubject<any[]>([]); // Initialize partners as a BehaviorSubject
 
   constructor() {
     // Check if user is logged in and connect if they are
@@ -68,6 +69,7 @@ export class WebSocketService {
           }
           if (message.type === 'users') {
             console.log('Users list received:', message.users);
+            this.partners.next(message.users); // Update partners with received users data
           }
         },
         error: (error) => {
@@ -160,5 +162,9 @@ export class WebSocketService {
         }, 1000);
       }
     }
+  }
+
+  public getPartners(): Observable<any[]> {
+    return this.partners.asObservable(); // Provide an observable for partners
   }
 }
