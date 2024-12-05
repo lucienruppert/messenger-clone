@@ -4,12 +4,12 @@ import WebSocket from 'ws';
 import * as http from 'http';
 
 interface User {
-  name: string;
+  name: string; // Updated to use name instead of username
   email: string;
 }
 
 const clients = new Set<WebSocket>();
-let emailStore: User[] = [];
+let emailStore: User[] = []; // Array to store all users
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -70,7 +70,7 @@ async function bootstrap() {
             }),
           );
           (ws as any).user = {
-            name: incomingData.name,
+            name: incomingData.name, // Updated to use name instead of username
             email: incomingData.email,
           };
 
@@ -121,9 +121,21 @@ async function bootstrap() {
         emailStore = emailStore.filter(
           (emailItem) => emailItem.email !== user.email,
         );
-        console.log(`Removed user: ${user.name} (${user.email})`);
+        console.log(`Removed user: ${user.name} (${user.email})`); // Updated to use name instead of username
         console.log(`Total users stored: ${emailStore.length}`);
-        console.log(`Current users: ${JSON.stringify(emailStore)}`);
+        console.log(`Current users: ${JSON.stringify(emailStore)}`); // Additional log
+
+        // Broadcast updated users list to all clients
+        clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(
+              JSON.stringify({
+                type: 'users',
+                users: emailStore,
+              }),
+            );
+          }
+        });
       }
       console.log(`Client disconnected. Total clients: ${clients.size}`);
     });
