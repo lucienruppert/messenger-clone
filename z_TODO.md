@@ -10,6 +10,8 @@
 **Initiating a chat with another client**
 
 [x] Click option to open chat - change style + create activeChat variable and put the users email in it
+[ ] Create Message types
+
 [ ] When sending the message, include the recipient's email in the messageData
 [ ] Finalize message type (and replace any)
 
@@ -21,6 +23,8 @@
 [ ] Save message to the db
 [ ] Send message to the recipient
 [ ] If the recipient is offline, the message stays in the database and is fetched when they reconnect.
+
+[ ] When clicked on the name, download and display last 10 messages
 
 **Multiple chats from the same client**
 

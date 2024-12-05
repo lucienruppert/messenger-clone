@@ -15,6 +15,7 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   partners: Partner[] = [];
   private partnersSubscription: Subscription | null = null;
   private currentUserEmail: string | null = null;
+  activeChat: string | null = null; // Added activeChat variable
 
   constructor(private webSocketService: WebSocketService) {
     this.currentUserEmail = sessionStorage.getItem('userEmail');
@@ -41,5 +42,11 @@ export class ChatlistComponent implements OnInit, OnDestroy {
     if (this.partnersSubscription) {
       this.partnersSubscription.unsubscribe();
     }
+  }
+
+  // Method to set the active chat
+  setActiveChat(partnerEmail: string) {
+    this.activeChat = partnerEmail;
+    console.log('Active chat set to:', this.activeChat);
   }
 }
