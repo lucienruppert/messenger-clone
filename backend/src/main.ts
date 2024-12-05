@@ -4,7 +4,7 @@ import WebSocket from 'ws';
 import * as http from 'http';
 
 interface User {
-  username: string;
+  name: string; // Updated to use name instead of username
   email: string;
 }
 
@@ -49,7 +49,7 @@ async function bootstrap() {
           );
           if (!userExists) {
             emailStore.push({
-              username: incomingData.name,
+              name: incomingData.name, // Updated to use name instead of username
               email: incomingData.email,
             });
             console.log(
@@ -70,7 +70,7 @@ async function bootstrap() {
             }),
           );
           (ws as any).user = {
-            username: incomingData.name,
+            name: incomingData.name, // Updated to use name instead of username
             email: incomingData.email,
           };
 
@@ -121,7 +121,7 @@ async function bootstrap() {
         emailStore = emailStore.filter(
           (emailItem) => emailItem.email !== user.email,
         );
-        console.log(`Removed user: ${user.username} (${user.email})`);
+        console.log(`Removed user: ${user.name} (${user.email})`); // Updated to use name instead of username
         console.log(`Total users stored: ${emailStore.length}`);
         console.log(`Current users: ${JSON.stringify(emailStore)}`); // Additional log
       }
