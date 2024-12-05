@@ -11,7 +11,7 @@
 
 [x] Click option to open chat - change style + create activeChat variable and put the users email in it
 [x] Create Message types
-[ ] Extract activePartner to a service
+[x] Extract activePartner to a service
 [ ] When sending the message, include the recipient's email in the messageData
 [ ] Finalize message type (and replace any)
 
