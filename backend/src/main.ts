@@ -35,69 +35,93 @@ async function bootstrap() {
         const incomingData = JSON.parse(message.toString());
         console.log(`Received message: ${JSON.stringify(incomingData)}`);
 
-        if (
-          incomingData.type === 'login' &&
-          incomingData.email &&
-          incomingData.name
-        ) {
-          const userExists = emailStore.some(
-            (user) => user.email === incomingData.email,
-          );
-          if (!userExists) {
-            emailStore.push({
-              name: incomingData.name,
-              email: incomingData.email,
-            });
-            console.log(`Total users stored: ${emailStore.length}`);
-            console.log(`Current users: ${JSON.stringify(emailStore)}`);
-          } else {
-            console.log(
-              `User already exists: ${incomingData.name} (${incomingData.email})`,
-            );
-          }
-          ws.send(
-            JSON.stringify({
-              type: 'loginResponse',
-              status: 'success',
-              message: 'User stored successfully',
-            }),
-          );
-          (ws as any).user = {
-            name: incomingData.name,
-            email: incomingData.email,
-          };
-
-          clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-              client.send(
+        switch (incomingData.type) {
+          case 'login':
+            if (incomingData.email && incomingData.name) {
+              const userExists = emailStore.some(
+                (user) => user.email === incomingData.email,
+              );
+              if (!userExists) {
+                emailStore.push({
+                  name: incomingData.name,
+                  email: incomingData.email,
+                });
+                console.log(`Total users stored: ${emailStore.length}`);
+                console.log(`Current users: ${JSON.stringify(emailStore)}`);
+              } else {
+                console.log(
+                  `User already exists: ${incomingData.name} (${incomingData.email})`,
+                );
+              }
+              ws.send(
                 JSON.stringify({
-                  type: 'users',
-                  users: emailStore,
+                  type: 'loginResponse',
+                  status: 'success',
+                  message: 'User stored successfully',
+                }),
+              );
+              (ws as any).user = {
+                name: incomingData.name,
+                email: incomingData.email,
+              };
+
+              clients.forEach((client) => {
+                if (client.readyState === WebSocket.OPEN) {
+                  client.send(
+                    JSON.stringify({
+                      type: 'users',
+                      users: emailStore,
+                    }),
+                  );
+                }
+              });
+
+              const heartbeatInterval = setInterval(() => {
+                if (ws.readyState === WebSocket.OPEN) {
+                  ws.send(JSON.stringify({ type: 'heartbeat' }));
+                } else {
+                  clearInterval(heartbeatInterval);
+                }
+              }, 30000);
+
+              // Clear interval when connection closes
+              ws.on('close', () => {
+                clearInterval(heartbeatInterval);
+              });
+            } else {
+              console.log(
+                `Invalid login data: ${JSON.stringify(incomingData)}`,
+              );
+              ws.send(
+                JSON.stringify({
+                  type: 'error',
+                  message: 'Invalid login data',
                 }),
               );
             }
-          });
-
-          const heartbeatInterval = setInterval(() => {
-            if (ws.readyState === WebSocket.OPEN) {
-              ws.send(JSON.stringify({ type: 'heartbeat' }));
-            } else {
-              clearInterval(heartbeatInterval);
-            }
-          }, 30000);
-
-          // Clear interval when connection closes
-          ws.on('close', () => {
-            clearInterval(heartbeatInterval);
-          });
-        } else {
-          console.log(`Invalid login data: ${JSON.stringify(incomingData)}`);
-          ws.send(
-            JSON.stringify({
-              type: 'message_response',
-              message: `Message received: ${message}`,
-            }),
-          );
+            break;
+          case 'chat':
+            console.log(
+              `Chat message received: ${JSON.stringify(incomingData)}`,
+            );
+            ws.send(
+              JSON.stringify({
+                type: 'messageResponse',
+                message: `Message received: ${message}`,
+              }),
+            );
+            break;
+          default:
+            console.log(
+              `Unknown message type: ${JSON.stringify(incomingData)}`,
+            );
+            ws.send(
+              JSON.stringify({
+                type: 'error',
+                message: 'Unknown message type',
+              }),
+            );
+            break;
         }
       } catch (error) {
         console.error('Error parsing message:', error);

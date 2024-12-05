@@ -18,7 +18,7 @@ export class ChatComponent {
     event.preventDefault();
     const email = sessionStorage.getItem('userEmail');
     if (email) {
-      this.webSocket.sendMessage({ message: this.messageInput, email: email });
+      this.webSocket.sendMessage({ message: this.messageInput, email: email, type: 'chat' });
     } else {
       console.error('User email not found in sessionStorage');
     }
