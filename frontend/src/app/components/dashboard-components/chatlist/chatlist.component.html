@@ -5,7 +5,7 @@
   <ul class="space-y-1">
     <li *ngFor="let partner of partners"
         class="rounded-md py-2 hover:bg-slate-800 cursor-pointer"
-        [ngClass]="{'bg-blue-900': partner.email === activeChat}"
+        [ngClass]="{'bg-blue-900': partner.email === activePartner}"
         (click)="setActiveChat(partner.email)">
       <div class="pl-3">{{ partner.name }}</div>
     </li>
