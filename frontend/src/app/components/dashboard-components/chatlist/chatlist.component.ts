@@ -17,7 +17,6 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   private currentUserEmail: string | null = null;
 
   constructor(private webSocketService: WebSocketService) {
-    // Get current user's email from session storage
     this.currentUserEmail = sessionStorage.getItem('userEmail');
     console.log('Current user email:', this.currentUserEmail);
   }
@@ -30,7 +29,6 @@ export class ChatlistComponent implements OnInit, OnDestroy {
           'Raw partners data received:',
           JSON.stringify(partners, null, 2),
         );
-        // Filter out the current user from the partners list
         if (this.currentUserEmail) {
           this.partners = partners.filter((partner) => {
             const isNotCurrentUser = partner.email !== this.currentUserEmail;
