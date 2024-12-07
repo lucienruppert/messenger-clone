@@ -4,18 +4,19 @@ import { WebSocketService } from '../../../services/websocket.service';
 import { ChatService } from '../../../services/chat.service';
 import { Subscription } from 'rxjs';
 import { Message } from '../../../types';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
 export class ChatComponent implements OnInit, OnDestroy {
   public messageInput = '';
+  public activePartner: string | null = null;
   private activePartnerSubscription: Subscription | null = null;
-  private activePartner: string | null = null;
 
   constructor(
     private webSocket: WebSocketService,

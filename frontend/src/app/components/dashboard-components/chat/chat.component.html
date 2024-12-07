@@ -6,8 +6,10 @@
   </ul>
 </div>
 
-<textarea rows="1"
-  [(ngModel)]="messageInput"
-  class="text-3xl mt-5 rounded-xl text-gray-500 p-3"
-  (keydown.enter)="sendMessage($event)"
-></textarea>
+<div *ngIf="activePartner">
+  <textarea rows="1"
+    [(ngModel)]="messageInput"
+    class="text-3xl mt-5 rounded-xl text-gray-500 p-3"
+    (keydown.enter)="sendMessage($event)"
+  ></textarea>
+</div>

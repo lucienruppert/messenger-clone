@@ -2,7 +2,7 @@
 
 [x] Fix not getting username from login problem
 [x] Fix chat not working as when deployed
-[ ] Chat input field is only visible when a partner is selected
+[x] Chat input field is only visible when a partner is selected
 
 **Save message to the db and deliver message to recipient**
 
