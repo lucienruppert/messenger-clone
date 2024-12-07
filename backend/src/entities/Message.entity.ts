@@ -1,7 +1,6 @@
 import { Entity } from 'typeorm';
 import { PrimaryGeneratedColumn } from 'typeorm';
 import { Column } from 'typeorm';
-import { CreateDateColumn } from 'typeorm';
 
 @Entity('messages')
 export class Message {
@@ -28,7 +27,4 @@ export class Message {
 
   @Column({ nullable: true, length: 20 })
   status: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
 }
