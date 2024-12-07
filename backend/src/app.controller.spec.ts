@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppService } from './services/app.service';
 import { getConnectionToken } from '@nestjs/mongoose';
 import { describe, it, expect, beforeEach } from 'vitest';
 
