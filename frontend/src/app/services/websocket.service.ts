@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subscription, timer } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { retry } from 'rxjs/operators';
 import { Partner, Message } from '../types';
+import { environment } from '../environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class WebSocketService {
     this.intentionalDisconnect = false;
     if (!this.webSocket$ || this.webSocket$.closed) {
       this.webSocket$ = webSocket<Message>({
-        url: 'ws://localhost:3000',
+        url: environment.websocketUrl,
         openObserver: {
           next: () => {
             console.log('WebSocket connected');
@@ -92,11 +93,11 @@ export class WebSocketService {
   }
 
   private reconnect(): void {
-    if (!this.reconnectSubscription && !this.intentionalDisconnect) {
+    if (!this.reconnectSubscription &&!this.intentionalDisconnect) {
       console.log('Starting reconnection attempts...');
       this.reconnectSubscription = timer(0, 3000).subscribe(() => {
         console.log('Attempting to reconnect...');
-        if (!this.isConnectedSubject.value && !this.intentionalDisconnect) {
+        if (!this.isConnectedSubject.value &&!this.intentionalDisconnect) {
           if (this.webSocket$) {
             this.webSocket$.complete();
             this.webSocket$ = null;
@@ -147,7 +148,7 @@ export class WebSocketService {
   }
 
   public sendMessage(message: Message): void {
-    if (this.webSocket$ && !this.webSocket$.closed) {
+    if (this.webSocket$ &&!this.webSocket$.closed) {
       this.webSocket$.next(message);
       console.log("Message sent:", message);
     } else {
@@ -156,7 +157,7 @@ export class WebSocketService {
       if (!this.intentionalDisconnect) {
         this.connect();
         setTimeout(() => {
-          if (this.webSocket$ && !this.webSocket$.closed) {
+          if (this.webSocket$ &&!this.webSocket$.closed) {
             this.webSocket$.next(message);
             console.log("Message sent after reconnection:", message);
           }
