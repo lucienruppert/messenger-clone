@@ -25,7 +25,7 @@ export class AuthRedirectGuardService implements CanActivate {
       if (!isLoggedIn) {
         return true;
       } else {
-        this.router.navigate(['/main']);
+        this.router.navigate(['/dashboard']);
         return false;
       }
     });
