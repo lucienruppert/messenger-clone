@@ -3,8 +3,8 @@
 [ ] When a message is received for a specific pair save it to the database
 
   [x] Create chat messages table in mysql
-  [ ] Delete all Mongodb related code
-  [ ] Extract logic into a component from main.ts OK  
+  [x] Delete all Mongodb related code
+  [ x] Extract logic into a component from main.ts OK  
 
 
   [ ] Set up ORM for nest.js
