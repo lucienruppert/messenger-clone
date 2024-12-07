@@ -31,11 +31,13 @@ export class AuthenticationService {
     try {
       const result$ = this.http.post<User>(`${this.baseUrl}/login`, formData);
       const userData = await firstValueFrom(result$);
-      console.log('userData:', userData);
-      this.setSessionState(true, email, userData.name);
+      this.setSessionState(true, email);
+      const name$ = this.http.post<string>(`${this.baseUrl}/username`, { email });
+      const name = await firstValueFrom(name$);
+      sessionStorage.setItem('userName', name);
       this.router.navigate(['/dashboard']);
       this.webSocketService.connect();
-      this.sendUserDataThroughWebSocket(email, userData.name);
+      this.sendUserDataThroughWebSocket(email, name);
       return userData;
     } catch (error: unknown) {
       const typedError = error as HttpErrorResponse;
@@ -52,16 +54,15 @@ export class AuthenticationService {
     return formData;
   }
 
-  private setSessionState(isLoggedIn: boolean, email: string, name: string): void {
+  private setSessionState(isLoggedIn: boolean, email: string): void {
     sessionStorage.setItem('isLoggedIn', isLoggedIn.toString());
     sessionStorage.setItem('userEmail', email);
-    sessionStorage.setItem('userName', name);
     this.emailSubject.next(email);
     this.isLoggedIn$.next(isLoggedIn);
   }
 
   public logout(): void {
-    console.log("Logging out and disconnecting WebSocket...");
+    console.log('Logging out and disconnecting WebSocket...');
     this.logoutonClient();
     this.logoutOnServer();
     this.webSocketService.disconnect();
@@ -69,7 +70,7 @@ export class AuthenticationService {
   }
 
   public logoutonClient(): void {
-    this.setSessionState(false, '', '');
+    this.setSessionState(false, '');
     sessionStorage.removeItem('userEmail');
     sessionStorage.removeItem('userName');
   }
@@ -85,6 +86,10 @@ export class AuthenticationService {
   }
 
   private sendUserDataThroughWebSocket(email: string, name: string): void {
-    this.webSocketService.sendMessage({ type: 'login', senderEmail: email, name });
+    this.webSocketService.sendMessage({
+      type: 'login',
+      senderEmail: email,
+      name,
+    });
   }
 }
