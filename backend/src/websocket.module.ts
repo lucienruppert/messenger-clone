@@ -1,5 +1,6 @@
 import WebSocket from 'ws';
 import * as http from 'http';
+import { v4 as uuidv4 } from 'uuid';
 
 interface User {
   name: string;
@@ -123,12 +124,28 @@ export class WebSocketServer {
   }
 
   private handleChat(ws: WebSocket, message: WebSocket.RawData): void {
-    ws.send(
-      JSON.stringify({
-        type: 'messageResponse',
-        message: `Message received: ${message}`,
-      }),
-    );
+    try {
+      const incomingMessage = JSON.parse(message.toString());
+      if (!incomingMessage.chatId) {
+        incomingMessage.chatId = uuidv4();
+      }
+      console.log(`Sending message: ${JSON.stringify(incomingMessage)}`);
+
+      ws.send(
+        JSON.stringify({
+          type: 'messageResponse',
+          message: incomingMessage,
+        }),
+      );
+    } catch (error) {
+      console.error('Error parsing message:', error);
+      ws.send(
+        JSON.stringify({
+          type: 'error',
+          message: 'Invalid message format',
+        }),
+      );
+    }
   }
 
   private handleClose(ws: WebSocket): void {
