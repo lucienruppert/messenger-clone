@@ -6,7 +6,7 @@ interface User {
   email: string;
 }
 
-export function setupWebSocketServer(server: http.Server) {
+export function webSocketServer(server: http.Server) {
   const clients = new Set<WebSocket>();
   let emailStore: User[] = [];
 

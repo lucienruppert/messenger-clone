@@ -1,14 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as http from 'http';
-import { setupWebSocketServer } from './websocket.module';
+import { webSocketServer } from './websocket.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
   const server = http.createServer(app.getHttpAdapter().getInstance());
-  setupWebSocketServer(server);
+  webSocketServer(server);
 
   server.listen(3000, () => {
     console.log(
