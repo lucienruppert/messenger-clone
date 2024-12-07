@@ -1,3 +1,9 @@
+**FIX**
+
+[x] Fix not getting username from login problem
+[x] Fix chat not working as when deployed
+[ ] Chat input field is only visible when a partner is selected
+
 **Save message to the db and deliver message to recipient**
 
 [ ] When a message is received for a specific pair save it to the database
@@ -21,12 +27,7 @@
 [ ] Lehessen törölni vagy arhiválni a beszélgetést
 
 
-
 [ ] When clicked on the name, download and display last 10 messages
-
-**Multiple chats from the same client**
-
-[ ] Make sure multiple chats work from the same client
 
 **Status updates**
 
