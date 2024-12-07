@@ -103,3 +103,9 @@
 [x] When sending the message, include the recipient's email in the messageData
 [x] Standardize message type across the application
 
+**FIX**
+
+[x] Fix not getting username from login problem
+[x] Fix chat not working as when deployed
+[x] Chat input field is only visible when a partner is selected
+

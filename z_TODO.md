@@ -1,14 +1,9 @@
-**FIX**
-
-[x] Fix not getting username from login problem
-[x] Fix chat not working as when deployed
-[x] Chat input field is only visible when a partner is selected
-
 **Save message to the db and deliver message to recipient**
 
 [ ] When a message is received for a specific pair save it to the database
 
-  [ ] Create chat messages table in mysql
+  [x] Create chat messages table in mysql
+
   [ ] Set up ORM for nest.js
   [ ] Create insert to the db - , add a UUID if none
 
