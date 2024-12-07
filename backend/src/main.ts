@@ -39,9 +39,7 @@ async function bootstrap() {
   new WebSocketServer(server, messagesService);
 
   server.listen(3000, () => {
-    console.log(
-      'Application and WebSocket server are running on: http://localhost:3000',
-    );
+    console.log(`Running in ${process.env.MODE} mode`);
   });
 }
 

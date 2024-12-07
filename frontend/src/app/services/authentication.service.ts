@@ -2,9 +2,9 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom, BehaviorSubject } from 'rxjs';
-import { environment } from '../environment';
 import { User } from '../types';
 import { WebSocketService } from './websocket.service';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
