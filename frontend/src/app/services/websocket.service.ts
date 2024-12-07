@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subscription, timer } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { retry } from 'rxjs/operators';
 import { Partner, Message } from '../types';
-import { environment } from '../environments/environment.dev';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
