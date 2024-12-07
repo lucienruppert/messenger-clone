@@ -1,19 +1,16 @@
-
-
-**Chatlist redesign**
-
-[ ] Minden résztvevő neve legyen ott a chatben mindig.
-
 **Save message to the db and deliver message to recipient**
 
-[ ] When a message received for a specific pair, add a UUID and save it to the database
+[ ] When a message is received for a specific pair save it to the database
 
-[ ] Create chat messages table in mysql
-[ ] Set up ORM for nest.js
-[ ] Create insert to the db
-[ ] Save message to the db
+  [ ] Create chat messages table in mysql
+  [ ] Set up ORM for nest.js
+  [ ] Create insert to the db - , add a UUID if none
+
+  [ ] Save message to the db
+
 [ ] Send message to the recipient
 [ ] If the recipient is offline, the message stays in the database and is fetched when they reconnect.
+[ ] Chatlist: azok a résztvevők legyenek ott, akivel már chateltem.
 
 **FIX**
 
