@@ -8,8 +8,6 @@
   [x] Make websocket module into a class
   [x] Set up ORM for the backend
   [x] Add a UUID if none
-
-  [ ] Create insert to the db - , 
   [ ] Save message to the db
 
 [ ] Send message to the recipient

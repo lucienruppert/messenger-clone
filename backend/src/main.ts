@@ -5,6 +5,7 @@ import { WebSocketServer } from './websocket.module';
 import { DataSource } from 'typeorm';
 import { join } from 'path';
 import * as dotenv from 'dotenv';
+import { MessagesService } from './services/messages.service';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -34,7 +35,8 @@ async function bootstrap() {
   app.enableCors();
 
   const server = http.createServer(app.getHttpAdapter().getInstance());
-  new WebSocketServer(server);
+  const messagesService = app.get(MessagesService);
+  new WebSocketServer(server, messagesService);
 
   server.listen(3000, () => {
     console.log(

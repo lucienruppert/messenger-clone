@@ -40,12 +40,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     const email = sessionStorage.getItem('userEmail');
     console.log('partner', this.activePartner);
     if (email && this.activePartner) {
+      const now = new Date();
+      const mysqlDatetime = now.toISOString().slice(0, 19).replace('T', ' ');
       const messagePayload: Message = {
         senderEmail: email,
         recipientEmail: this.activePartner,
         type: 'chat',
         message: this.messageInput,
-        timestamp: Date.now(),
+        timestamp: mysqlDatetime,
         status: 'sent'
       };
       this.webSocket.sendMessage(messagePayload);

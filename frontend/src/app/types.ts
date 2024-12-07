@@ -19,6 +19,6 @@ export type Message = {
   message?: string;
   users?: Partner[];
   name?: string;
-  timestamp?: number;
+  timestamp?: string;
   status?: 'sent' | 'delivered' | 'seen' | 'failed';
 };

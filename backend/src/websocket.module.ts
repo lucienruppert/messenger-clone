@@ -1,6 +1,7 @@
 import WebSocket from 'ws';
 import * as http from 'http';
 import { v4 as uuidv4 } from 'uuid';
+import { MessagesService } from './services/messages.service';
 
 interface User {
   name: string;
@@ -12,7 +13,10 @@ export class WebSocketServer {
   private emailStore: User[];
   private wsServer: WebSocket.Server;
 
-  constructor(server: http.Server) {
+  constructor(
+    server: http.Server,
+    private messagesService: MessagesService,
+  ) {
     this.clients = new Set<WebSocket>();
     this.emailStore = [];
     this.wsServer = new WebSocket.Server({ server });
@@ -53,7 +57,7 @@ export class WebSocketServer {
           break;
 
         case 'chat':
-          this.handleChat(ws, message);
+          this.handleChat(ws, incomingMessage);
           break;
 
         default:
@@ -123,26 +127,65 @@ export class WebSocketServer {
     }
   }
 
-  private handleChat(ws: WebSocket, message: WebSocket.RawData): void {
+  private async handleChat(ws: WebSocket, incomingMessage: any): Promise<void> {
     try {
-      const incomingMessage = JSON.parse(message.toString());
       if (!incomingMessage.chatId) {
         incomingMessage.chatId = uuidv4();
       }
-      console.log(`Sending message: ${JSON.stringify(incomingMessage)}`);
 
+      // Convert timestamp string to Date object for MySQL
+      if (incomingMessage.timestamp) {
+        incomingMessage.timestamp = new Date(incomingMessage.timestamp);
+      } else {
+        incomingMessage.timestamp = new Date();
+      }
+
+      if (!incomingMessage.status) {
+        incomingMessage.status = 'sent';
+      }
+
+      console.log(
+        'Attempting to save message:',
+        JSON.stringify(incomingMessage),
+      );
+
+      const savedMessage =
+        await this.messagesService.createMessage(incomingMessage);
+
+      console.log('Message saved successfully:', JSON.stringify(savedMessage));
+
+      // Send the message to the recipient if they are connected
+      this.clients.forEach((client) => {
+        const clientUser = (client as any).user;
+        if (
+          client.readyState === WebSocket.OPEN &&
+          clientUser &&
+          clientUser.email === incomingMessage.recipientEmail
+        ) {
+          client.send(
+            JSON.stringify({
+              ...savedMessage,
+              type: 'chat',
+            }),
+          );
+        }
+      });
+
+      // Send confirmation back to sender
       ws.send(
         JSON.stringify({
           type: 'messageResponse',
-          message: incomingMessage,
+          status: 'success',
+          message: savedMessage,
         }),
       );
     } catch (error) {
-      console.error('Error parsing message:', error);
+      console.error('Error handling chat message:', error);
       ws.send(
         JSON.stringify({
           type: 'error',
-          message: 'Invalid message format',
+          message: 'Failed to save message',
+          error: error.message,
         }),
       );
     }
