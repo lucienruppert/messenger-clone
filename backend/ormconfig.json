@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "username": "root",
+  "password": "",
+  "database": "messenger",
+  "entities": ["dist/src/entities/**/*.entity{.ts,.js}"],
+  "synchronize": true,
+  "logging": false
+}

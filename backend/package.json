@@ -25,8 +25,11 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/platform-socket.io": "^10.4.13",
     "@nestjs/websockets": "^10.4.13",
-    "reflect-metadata": "^0.2.0",
+    "dotenv": "^16.4.7",
+    "mysql2": "^3.11.5",
+    "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
+    "typeorm": "^0.3.20",
     "ws": "^8.18.0"
   },
   "devDependencies": {
