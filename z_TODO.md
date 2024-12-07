@@ -4,8 +4,9 @@
 
   [x] Create chat messages table in mysql
   [x] Delete all Mongodb related code
-  [ x] Extract logic into a component from main.ts OK  
+  [x] Extract logic into a component from main.ts OK  
 
+  [x] Make a model
 
   [ ] Set up ORM for nest.js
   [ ] Create insert to the db - , add a UUID if none

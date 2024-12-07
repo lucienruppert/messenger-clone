@@ -6,154 +6,175 @@ interface User {
   email: string;
 }
 
-export function webSocketServer(server: http.Server) {
-  const clients = new Set<WebSocket>();
-  let emailStore: User[] = [];
+export class WebSocketServer {
+  private clients: Set<WebSocket>;
+  private emailStore: User[];
+  private wsServer: WebSocket.Server;
 
-  const webSocketServer = new WebSocket.Server({ server });
+  constructor(server: http.Server) {
+    this.clients = new Set<WebSocket>();
+    this.emailStore = [];
+    this.wsServer = new WebSocket.Server({ server });
+    this.initialize();
+  }
 
-  webSocketServer.on('connection', (ws) => {
-    clients.add(ws);
-    console.log(`New connection opened. Number of clients: ${clients.size}`);
+  private initialize(): void {
+    this.wsServer.on('connection', (ws) => {
+      this.handleNewConnection(ws);
+      ws.on('message', (message) => this.handleMessage(ws, message));
+      ws.on('close', () => this.handleClose(ws));
+      ws.on('error', (error) => this.handleError(error));
+    });
+  }
 
-    // Send initial connection acknowledgment
+  private handleNewConnection(ws: WebSocket): void {
+    this.clients.add(ws);
+    console.log(
+      `New connection opened. Number of clients: ${this.clients.size}`,
+    );
+
     ws.send(
       JSON.stringify({
         type: 'connection',
         message: 'You are connected',
       }),
     );
+  }
 
-    ws.on('message', (message) => {
-      try {
-        const incomingMessage = JSON.parse(message.toString());
-        console.log(`Received message: ${JSON.stringify(incomingMessage)}`);
+  private handleMessage(ws: WebSocket, message: WebSocket.RawData): void {
+    try {
+      const incomingMessage = JSON.parse(message.toString());
+      console.log(`Received message: ${JSON.stringify(incomingMessage)}`);
 
-        switch (incomingMessage.type) {
-          case 'login':
-            if (incomingMessage.senderEmail && incomingMessage.name) {
-              const userExists = emailStore.some(
-                (user) => user.email === incomingMessage.senderEmail,
-              );
-              if (!userExists) {
-                emailStore.push({
-                  name: incomingMessage.name,
-                  email: incomingMessage.senderEmail,
-                });
-                console.log(`Total users stored: ${emailStore.length}`);
-                console.log(`Current users: ${JSON.stringify(emailStore)}`);
-              } else {
-                console.log(
-                  `User already exists: ${incomingMessage.name} (${incomingMessage.senderEmail})`,
-                );
-              }
-              ws.send(
-                JSON.stringify({
-                  type: 'loginResponse',
-                  status: 'success',
-                  message: 'User stored successfully',
-                }),
-              );
-              (ws as any).user = {
-                name: incomingMessage.name,
-                email: incomingMessage.senderEmail,
-              };
+      switch (incomingMessage.type) {
+        case 'login':
+          this.handleLogin(ws, incomingMessage);
+          break;
 
-              clients.forEach((client) => {
-                if (client.readyState === WebSocket.OPEN) {
-                  client.send(
-                    JSON.stringify({
-                      type: 'users',
-                      users: emailStore,
-                    }),
-                  );
-                }
-              });
+        case 'chat':
+          this.handleChat(ws, message);
+          break;
 
-              const heartbeatInterval = setInterval(() => {
-                if (ws.readyState === WebSocket.OPEN) {
-                  ws.send(JSON.stringify({ type: 'heartbeat' }));
-                } else {
-                  clearInterval(heartbeatInterval);
-                }
-              }, 30000);
+        default:
+          console.log(
+            `Unknown message type: ${JSON.stringify(incomingMessage)}`,
+          );
+          ws.send(
+            JSON.stringify({
+              type: 'error',
+              message: 'Unknown message type',
+            }),
+          );
+          break;
+      }
+    } catch (error) {
+      console.error('Error parsing message:', error);
+      ws.send(
+        JSON.stringify({
+          type: 'error',
+          message: 'Invalid message format',
+        }),
+      );
+    }
+  }
 
-              // Clear interval when connection closes
-              ws.on('close', () => {
-                clearInterval(heartbeatInterval);
-              });
-            } else {
-              console.log(
-                `Invalid login data: ${JSON.stringify(incomingMessage)}`,
-              );
-              ws.send(
-                JSON.stringify({
-                  type: 'error',
-                  message: 'Invalid login data',
-                }),
-              );
-            }
-            break;
+  private handleLogin(ws: WebSocket, incomingMessage: any): void {
+    if (incomingMessage.senderEmail && incomingMessage.name) {
+      const userExists = this.emailStore.some(
+        (user) => user.email === incomingMessage.senderEmail,
+      );
+      if (!userExists) {
+        this.emailStore.push({
+          name: incomingMessage.name,
+          email: incomingMessage.senderEmail,
+        });
+        console.log(`Total users stored: ${this.emailStore.length}`);
+        console.log(`Current users: ${JSON.stringify(this.emailStore)}`);
+      } else {
+        console.log(
+          `User already exists: ${incomingMessage.name} (${incomingMessage.senderEmail})`,
+        );
+      }
 
-          case 'chat':
-            ws.send(
-              JSON.stringify({
-                type: 'messageResponse',
-                message: `Message received: ${message}`,
-              }),
-            );
-            break;
+      ws.send(
+        JSON.stringify({
+          type: 'loginResponse',
+          status: 'success',
+          message: 'User stored successfully',
+        }),
+      );
 
-          default:
-            console.log(
-              `Unknown message type: ${JSON.stringify(incomingMessage)}`,
-            );
-            ws.send(
-              JSON.stringify({
-                type: 'error',
-                message: 'Unknown message type',
-              }),
-            );
-            break;
-        }
-      } catch (error) {
-        console.error('Error parsing message:', error);
-        ws.send(
+      (ws as any).user = {
+        name: incomingMessage.name,
+        email: incomingMessage.senderEmail,
+      };
+
+      this.broadcastUsers();
+      this.setupHeartbeat(ws);
+    } else {
+      console.log(`Invalid login data: ${JSON.stringify(incomingMessage)}`);
+      ws.send(
+        JSON.stringify({
+          type: 'error',
+          message: 'Invalid login data',
+        }),
+      );
+    }
+  }
+
+  private handleChat(ws: WebSocket, message: WebSocket.RawData): void {
+    ws.send(
+      JSON.stringify({
+        type: 'messageResponse',
+        message: `Message received: ${message}`,
+      }),
+    );
+  }
+
+  private handleClose(ws: WebSocket): void {
+    this.clients.delete(ws);
+    const user = (ws as any).user;
+    if (user) {
+      this.emailStore = this.emailStore.filter(
+        (emailItem) => emailItem.email !== user.email,
+      );
+      console.log(`Removed user: ${user.name} (${user.email})`);
+      console.log(`Total users stored: ${this.emailStore.length}`);
+      console.log(`Current users: ${JSON.stringify(this.emailStore)}`);
+
+      this.broadcastUsers();
+    }
+    console.log(`Client disconnected. Total clients: ${this.clients.size}`);
+  }
+
+  private handleError(error: Error): void {
+    console.error('WebSocket error:', error);
+  }
+
+  private broadcastUsers(): void {
+    this.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(
           JSON.stringify({
-            type: 'error',
-            message: 'Invalid message format',
+            type: 'users',
+            users: this.emailStore,
           }),
         );
       }
     });
+  }
+
+  private setupHeartbeat(ws: WebSocket): void {
+    const heartbeatInterval = setInterval(() => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'heartbeat' }));
+      } else {
+        clearInterval(heartbeatInterval);
+      }
+    }, 30000);
 
     ws.on('close', () => {
-      clients.delete(ws);
-      const user = (ws as any).user;
-      if (user) {
-        emailStore = emailStore.filter(
-          (emailItem) => emailItem.email !== user.email,
-        );
-        console.log(`Removed user: ${user.name} (${user.email})`);
-        console.log(`Total users stored: ${emailStore.length}`);
-        console.log(`Current users: ${JSON.stringify(emailStore)}`);
-
-        clients.forEach((client) => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(
-              JSON.stringify({
-                type: 'users',
-                users: emailStore,
-              }),
-            );
-          }
-        });
-      }
-      console.log(`Client disconnected. Total clients: ${clients.size}`);
+      clearInterval(heartbeatInterval);
     });
-
-    ws.on('error', (error) => {
-      console.error('WebSocket error:', error);
-    });
-  });
+  }
 }
