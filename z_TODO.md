@@ -1,15 +1,5 @@
 **Save message to the db and deliver message to recipient**
 
-[ ] When a message is received for a specific pair save it to the database
-
-  [x] Create chat messages table in mysql
-  [x] Delete all Mongodb related code
-  [x] Extract logic into a component from main.ts OK  
-  [x] Make websocket module into a class
-  [x] Set up ORM for the backend
-  [x] Add a UUID if none
-  [ ] Save message to the db
-
 [ ] Send message to the recipient
 [ ] If the recipient is offline, the message stays in the database and is fetched when they reconnect.
 [ ] Chatlist: azok a résztvevők legyenek ott, akivel már chateltem.
@@ -21,7 +11,6 @@
 **KÉSŐBB**
 
 [ ] Lehessen törölni vagy arhiválni a beszélgetést
-
 
 [ ] When clicked on the name, download and display last 10 messages
 
@@ -131,7 +120,7 @@ Body: { messageIds: string[] }
 [ ] Implement retry mechanism with exponential backoff
 
 [ ] Add offline detection and recovery
- OK tea
+OK tea
 [ ] Implement offline message queuing
 
 [ ] Add error indicators in UI
@@ -140,4 +129,3 @@ Body: { messageIds: string[] }
 
 [ ] Randi-gyakorlás
 [ ] Flört, szex
-

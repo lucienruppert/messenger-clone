@@ -109,3 +109,12 @@
 [x] Fix chat not working as when deployed
 [x] Chat input field is only visible when a partner is selected
 
+**Save message to the db**
+
+[x] Create chat messages table in mysql
+[x] Delete all Mongodb related code
+[x] Extract logic into a component from main.ts OK  
+[x] Make websocket module into a class
+[x] Set up ORM for the backend
+[x] Add a UUID if none
+[x] Save message to the db
