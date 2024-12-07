@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WebSocketService } from '../../../services/websocket.service';
 import { ChatService } from '../../../services/chat.service';
@@ -13,10 +13,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   public messageInput = '';
   public activePartner: string | null = null;
   private activePartnerSubscription: Subscription | null = null;
+
+  @ViewChild('messageInputField') messageInputField!: ElementRef;
 
   constructor(
     private webSocket: WebSocketService,
@@ -26,12 +28,27 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.activePartnerSubscription = this.chatService.activePartner$.subscribe((partnerEmail) => {
       this.activePartner = partnerEmail;
+      if (partnerEmail) {
+        setTimeout(() => this.focusMessageInput(), 100);
+      }
     });
+  }
+
+  ngAfterViewInit() {
+    if (this.activePartner) {
+      this.focusMessageInput();
+    }
   }
 
   ngOnDestroy() {
     if (this.activePartnerSubscription) {
       this.activePartnerSubscription.unsubscribe();
+    }
+  }
+
+  private focusMessageInput(): void {
+    if (this.messageInputField?.nativeElement) {
+      this.messageInputField.nativeElement.focus();
     }
   }
 
@@ -55,5 +72,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       console.error('User email or active partner not found');
     }
     this.messageInput = '';
+    this.focusMessageInput();
   }
 }
