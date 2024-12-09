@@ -4,6 +4,7 @@
 [x] Send message to the recipient
 [x] If the recipient is offline, the message stays in the database and is fetched when they reconnect and logs in.
 
+[ ] Upon login I still might see earlier messages?
 [ ] Chatlist: azok a résztvevők legyenek ott, akivel már chateltem.
 
 **FIX**

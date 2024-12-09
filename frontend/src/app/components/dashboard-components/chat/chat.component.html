@@ -8,10 +8,10 @@
       <li
         *ngFor="let message of messages"
         [ngClass]="{
-          'bg-light-gold text-white self-start': !isCurrentUser(
+          'bg-slate-800 text-white self-start': !isCurrentUser(
             message.senderEmail
           ),
-          'bg-slate-800 text-gray-300 self-end': isCurrentUser(
+          'bg-light-gold text-slate-800 self-end': isCurrentUser(
             message.senderEmail
           ),
         }"
