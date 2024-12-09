@@ -34,13 +34,14 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
-  const server = http.createServer(app.getHttpAdapter().getInstance());
+  const httpServer = http.createServer(app.getHttpAdapter().getInstance());
   const messagesService = app.get(MessagesService);
-  new WebSocketServer(server, messagesService);
+  new WebSocketServer(httpServer, messagesService);
 
-  server.listen(3000, () => {
-    console.log(`Running in ${process.env.MODE} mode`);
-  });
+  await app.init();
+  await new Promise<void>((resolve) => httpServer.listen(3000, resolve));
+  console.log(`Running in ${process.env.MODE} mode`);
+  console.log('HTTP Server running on port 3000');
 }
 
 bootstrap().catch((error) => {
