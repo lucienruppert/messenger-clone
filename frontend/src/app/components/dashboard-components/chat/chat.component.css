@@ -2,11 +2,6 @@
   @apply flex h-screen flex-col justify-between text-white p-5 w-full bg-black;
 }
 
-textarea {
-  width: 40vw;
- @apply bg-slate-800
-}
-
 @media (max-width: 768px) {
   textarea {
     width: 90%;
