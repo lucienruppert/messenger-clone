@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { first } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,17 +17,22 @@ export class GeneralRouteGuardService implements CanActivate {
     private router: Router,
   ) {}
 
-  public canActivate(
+  public async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-  ): boolean | Promise<boolean> {
-    return this.authentication.isLoggedIn$.pipe(first()).toPromise().then(isLoggedIn => {
+  ): Promise<boolean> {
+    try {
+      const isLoggedIn = await firstValueFrom(this.authentication.isLoggedIn$);
       if (isLoggedIn) {
         return true;
       } else {
         this.router.navigate(['/']);
         return false;
       }
-    });
+    } catch (error) {
+      console.error('Error in route guard:', error);
+      this.router.navigate(['/']);
+      return false;
+    }
   }
 }
