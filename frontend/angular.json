@@ -26,7 +26,8 @@
             ],
             "styles": ["src/styles.css"],
             "scripts": [],
-            "baseHref": "/chat/"
+            "baseHref": "/chat/",
+            "deployUrl": "/chat/"
           },
           "configurations": {
             "production": {
