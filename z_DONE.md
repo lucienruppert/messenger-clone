@@ -118,3 +118,4 @@
 [x] Set up ORM for the backend
 [x] Add a UUID if none
 [x] Save message to the db
+[x] Fixed prod variables so the app automatically chooses remote backend

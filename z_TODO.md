@@ -1,3 +1,5 @@
+[ ] Ha ráfrissítek, elroutingol dashboard/chatre
+
 **Save message to the db and deliver message to recipient**
 
 [ ] Send message to the recipient
@@ -10,7 +12,7 @@
 
 **KÉSŐBB**
 
-[ ] Lehessen törölni vagy arhiválni a beszélgetést
+[ ] Lehessen törölni vagy archiválni a beszélgetést
 
 [ ] When clicked on the name, download and display last 10 messages
 
