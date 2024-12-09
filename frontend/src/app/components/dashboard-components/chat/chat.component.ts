@@ -16,9 +16,12 @@ import { CommonModule } from '@angular/common';
 export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   public messageInput = '';
   public activePartner: string | null = null;
+  public messages: Message[] = [];
   private activePartnerSubscription: Subscription | null = null;
+  private messagesSubscription: Subscription | null = null;
 
   @ViewChild('messageInputField') messageInputField!: ElementRef;
+  @ViewChild('messagesContainer') messagesContainer!: ElementRef;
 
   constructor(
     private webSocket: WebSocketService,
@@ -32,6 +35,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(() => this.focusMessageInput(), 100);
       }
     });
+
+    this.messagesSubscription = this.chatService.messages$.subscribe((messages) => {
+      this.messages = messages;
+      setTimeout(() => this.scrollToBottom(), 100);
+    });
   }
 
   ngAfterViewInit() {
@@ -44,6 +52,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.activePartnerSubscription) {
       this.activePartnerSubscription.unsubscribe();
     }
+    if (this.messagesSubscription) {
+      this.messagesSubscription.unsubscribe();
+    }
   }
 
   private focusMessageInput(): void {
@@ -52,9 +63,24 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  private scrollToBottom(): void {
+    if (this.messagesContainer?.nativeElement) {
+      const container = this.messagesContainer.nativeElement;
+      container.scrollTop = container.scrollHeight;
+    }
+  }
+
+  getCurrentUserEmail(): string {
+    return sessionStorage.getItem('userEmail') || '';
+  }
+
+  isCurrentUser(email: string): boolean {
+    return email === this.getCurrentUserEmail();
+  }
+
   public sendMessage(event: Event) {
     event.preventDefault();
-    const email = sessionStorage.getItem('userEmail');
+    const email = this.getCurrentUserEmail();
     console.log('partner', this.activePartner);
     if (email && this.activePartner) {
       const now = new Date();

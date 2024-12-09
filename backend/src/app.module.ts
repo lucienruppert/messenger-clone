@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Message } from './entities/Message.entity';
 import { MessagesService } from './services/messages.service';
+import { MessagesController } from './messages.controller';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { MessagesService } from './services/messages.service';
     }),
     TypeOrmModule.forFeature([Message]),
   ],
-  controllers: [AppController],
+  controllers: [AppController, MessagesController],
   providers: [AppService, MessagesService],
 })
 export class AppModule {}

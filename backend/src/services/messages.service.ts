@@ -23,4 +23,24 @@ export class MessagesService {
       throw error;
     }
   }
+
+  async getMessagesBetweenUsers(
+    userEmail1: string,
+    userEmail2: string,
+  ): Promise<Message[]> {
+    try {
+      return await this.messagesRepository.find({
+        where: [
+          { senderEmail: userEmail1, recipientEmail: userEmail2 },
+          { senderEmail: userEmail2, recipientEmail: userEmail1 },
+        ],
+        order: {
+          timestamp: 'ASC',
+        },
+      });
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      throw error;
+    }
+  }
 }
