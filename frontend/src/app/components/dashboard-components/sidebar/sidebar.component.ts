@@ -15,12 +15,14 @@ import { ChatlistComponent } from '../chatlist/chatlist.component';
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   public isConnected$: Observable<boolean>;
+  public currentUserName: string | null = null;
 
   constructor(
     private authentication: AuthenticationService,
     private webSocketService: WebSocketService
   ) {
     this.isConnected$ = this.webSocketService.getConnectionStatus();
+    this.currentUserName = sessionStorage.getItem('userName');
   }
 
   ngOnInit(): void {}

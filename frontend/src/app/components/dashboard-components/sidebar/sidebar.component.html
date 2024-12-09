@@ -1,12 +1,15 @@
 <main>
-  <div class="flex flex-row p-4 items-center justify-between">
-    <button mat-button (click)="logout()">Kilépés</button>
-    <span
-      class="flex w-3 h-3 rounded-full"
-      [ngStyle]="{
-        'background-color': (isConnected$ | async) ? 'green' : 'red',
-      }"
-    ></span>
+  <div class="flex flex-col p-4">
+    <div class="flex flex-row items-center justify-between mb-2">
+      <button mat-button (click)="logout()">Kilépés</button>
+      <span
+        class="flex w-3 h-3 rounded-full"
+        [ngStyle]="{
+          'background-color': (isConnected$ | async) ? 'green' : 'red',
+        }"
+      ></span>
+    </div>
+    <div class="text-gray-400 mb-4">Belépve: {{ currentUserName }}</div>
   </div>
   <app-chatlist></app-chatlist>
 </main>

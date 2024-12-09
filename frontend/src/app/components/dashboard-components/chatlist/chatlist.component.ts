@@ -17,12 +17,14 @@ export class ChatlistComponent implements OnInit, OnDestroy {
   private partnersSubscription: Subscription | null = null;
   private currentUserEmail: string | null = null;
   public activePartner: string | null = null;
+  public currentUserName: string | null = null;
 
   constructor(
     private webSocketService: WebSocketService,
     private chatService: ChatService,
   ) {
     this.currentUserEmail = sessionStorage.getItem('userEmail');
+    this.currentUserName = sessionStorage.getItem('userName');
     console.log('Current user email:', this.currentUserEmail);
   }
 

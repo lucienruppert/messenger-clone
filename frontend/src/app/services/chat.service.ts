@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '../types';
 import { environment } from '../environments/environment';
@@ -21,8 +21,16 @@ export class ChatService {
     // Subscribe to new messages from WebSocket
     this.webSocketService.message$.subscribe(message => {
       if (message && message.type === 'chat') {
-        const currentMessages = this.messagesSubject.value;
-        this.messagesSubject.next([...currentMessages, message]);
+        const currentUserEmail = sessionStorage.getItem('userEmail');
+        const activePartner = this.activePartnerSubject.value;
+
+        // Only add message if it's between current user and active partner
+        if (currentUserEmail && activePartner && (
+          (message.senderEmail === currentUserEmail && message.recipientEmail === activePartner) ||
+          (message.senderEmail === activePartner && message.recipientEmail === currentUserEmail)
+        )) {
+          this.addMessage(message);
+        }
       }
     });
   }
@@ -52,5 +60,10 @@ export class ChatService {
           this.messagesSubject.next([]);
         }
       });
+  }
+
+  addMessage(message: Message): void {
+    const currentMessages = this.messagesSubject.value;
+    this.messagesSubject.next([...currentMessages, message]);
   }
 }

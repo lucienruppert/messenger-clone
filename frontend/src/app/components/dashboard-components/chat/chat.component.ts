@@ -82,22 +82,28 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     event.preventDefault();
     const email = this.getCurrentUserEmail();
     console.log('partner', this.activePartner);
-    if (email && this.activePartner) {
+    if (email && this.activePartner && this.messageInput.trim()) {
       const now = new Date();
       const mysqlDatetime = now.toISOString().slice(0, 19).replace('T', ' ');
       const messagePayload: Message = {
         senderEmail: email,
         recipientEmail: this.activePartner,
         type: 'chat',
-        message: this.messageInput,
+        message: this.messageInput.trim(),
         timestamp: mysqlDatetime,
         status: 'sent'
       };
+
+      // Add message to local stream immediately
+      this.chatService.addMessage(messagePayload);
+
+      // Send message through WebSocket
       this.webSocket.sendMessage(messagePayload);
+
+      this.messageInput = '';
+      this.focusMessageInput();
     } else {
       console.error('User email or active partner not found');
     }
-    this.messageInput = '';
-    this.focusMessageInput();
   }
 }
