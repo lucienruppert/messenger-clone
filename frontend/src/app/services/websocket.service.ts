@@ -16,6 +16,8 @@ export class WebSocketService {
   private reconnectSubscription: Subscription | null = null;
   private intentionalDisconnect: boolean = false;
   private partners = new BehaviorSubject<Partner[]>([]);
+  private messageSubject = new BehaviorSubject<Message | null>(null);
+  public message$ = this.messageSubject.asObservable();
 
   constructor() {
     // Check if user is logged in and connect if they are
@@ -69,9 +71,13 @@ export class WebSocketService {
           if (message.type === 'loginResponse') {
             console.log('loginResponse received:', message);
           }
-          if (message.type === 'users' && message.users) {
+          else if (message.type === 'users' && message.users) {
             console.log('Users list received:', message.users);
             this.partners.next(message.users);
+          }
+          else if (message.type === 'chat') {
+            console.log('Chat message received:', message);
+            this.messageSubject.next(message);
           }
         },
         error: (error) => {

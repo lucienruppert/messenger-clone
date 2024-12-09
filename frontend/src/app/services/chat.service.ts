@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '../types';
 import { environment } from '../environments/environment';
+import { WebSocketService } from './websocket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,18 @@ export class ChatService {
   private messagesSubject = new BehaviorSubject<Message[]>([]);
   messages$ = this.messagesSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private webSocketService: WebSocketService
+  ) {
+    // Subscribe to new messages from WebSocket
+    this.webSocketService.message$.subscribe(message => {
+      if (message && message.type === 'chat') {
+        const currentMessages = this.messagesSubject.value;
+        this.messagesSubject.next([...currentMessages, message]);
+      }
+    });
+  }
 
   get activePartner(): string | null {
     return this.activePartnerSubject.value;

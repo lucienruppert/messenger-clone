@@ -18,7 +18,7 @@
     <textarea #messageInputField
       rows="1"
       [(ngModel)]="messageInput"
-      class="w-full text-lg rounded-xl text-gray-800 p-3 border border-gray-300 focus:outline-none focus:border-blue-500"
+      class="w-full text-lg rounded-xl text-gray-300 p-3 border border-gray-300 focus:outline-none focus:border-blue-500"
       (keydown.enter)="sendMessage($event)"
       placeholder="Type a message..."
     ></textarea>

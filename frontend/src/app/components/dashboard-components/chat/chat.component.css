@@ -1,5 +1,5 @@
 :host {
-  @apply flex bg-slate-300 h-screen flex-col justify-between text-white p-5;
+  @apply flex h-screen flex-col justify-between text-white p-5;
   background-color: var(--darkblue);
 }
 
