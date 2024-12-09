@@ -13,10 +13,7 @@ body {
 }
 
 :root {
-  --dark: #031525; /* rgb(3, 21, 37) */
-  --lighter: rgba(13, 34, 54); 
   --secondary: rgb(8, 143, 143);
-  /* --secondary: rgb(255, 68, 51); orange */
   --darkblue: #031525; /* rgb(3, 21, 37) */
   --lightblue: rgba(13, 34, 54);
   --yellow: #FFD700;
@@ -42,15 +39,11 @@ cdk-dialog-container {
 }
 
 .mat-mdc-menu-content {
-  background-color: var(--dark);
-}
-
-.mat-mdc-button:not(:disabled) {
-  color: var(--white);
+  @apply bg-black;
 }
 
 .mdc-snackbar__surface {
-  background-color: var(--secondary) !important;
+  @apply bg-light-gold;
   border: 1px solid grey;
 }
 

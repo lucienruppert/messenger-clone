@@ -1,6 +1,5 @@
 :host {
-  @apply flex h-screen flex-col justify-between text-white p-5;
-  background-color: var(--darkblue);
+  @apply flex h-screen flex-col justify-between text-white p-5 w-full bg-black;
 }
 
 textarea {
