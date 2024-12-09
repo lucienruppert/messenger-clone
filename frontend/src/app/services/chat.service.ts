@@ -33,18 +33,27 @@ export class ChatService {
         }
       }
     });
+
+    // Clear messages when no partner is selected
+    this.activePartner$.subscribe(partner => {
+      if (!partner) {
+        this.messagesSubject.next([]);
+      }
+    });
   }
 
   get activePartner(): string | null {
     return this.activePartnerSubject.value;
   }
 
-  setActiveChat(partnerEmail: string) {
+  setActiveChat(partnerEmail: string | null) {
     this.activePartnerSubject.next(partnerEmail);
     console.log('Active chat set to:', this.activePartner);
-    const currentUserEmail = sessionStorage.getItem('userEmail');
-    if (currentUserEmail) {
-      this.fetchMessages(currentUserEmail, partnerEmail);
+    if (partnerEmail) {
+      const currentUserEmail = sessionStorage.getItem('userEmail');
+      if (currentUserEmail) {
+        this.fetchMessages(currentUserEmail, partnerEmail);
+      }
     }
   }
 

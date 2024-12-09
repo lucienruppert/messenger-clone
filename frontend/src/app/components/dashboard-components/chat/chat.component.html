@@ -1,5 +1,5 @@
 <div class="flex flex-col h-full">
-  <div #messagesContainer class="flex-1 overflow-y-auto mb-4 px-4">
+  <div *ngIf="activePartner" #messagesContainer class="flex-1 overflow-y-auto mb-4 px-4">
     <ul class="flex flex-col space-y-4">
       <li *ngFor="let message of messages"
           [ngClass]="{'flex justify-end': isCurrentUser(message.senderEmail),
@@ -14,11 +14,15 @@
     </ul>
   </div>
 
+  <div *ngIf="!activePartner" class="flex-1 flex items-center justify-center text-gray-500">
+    Select a chat partner to start messaging
+  </div>
+
   <div *ngIf="activePartner" class="px-4 pb-4">
     <textarea #messageInputField
       rows="1"
       [(ngModel)]="messageInput"
-      class="w-full text-lg rounded-xl text-gray-300 p-3 border border-gray-300 focus:outline-none focus:border-blue-500"
+      class="w-full text-lg rounded-xl text-gray-800 p-3 border border-gray-300 focus:outline-none focus:border-blue-500"
       (keydown.enter)="sendMessage($event)"
       placeholder="Type a message..."
     ></textarea>

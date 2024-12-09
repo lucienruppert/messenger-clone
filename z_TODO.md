@@ -1,9 +1,8 @@
 **Save message to db and deliver message to recipient**
 
-[ ] On clicking on the partner let's fetch all the messages between is
-
-[ ] Send message to the recipient
-[ ] If the recipient is offline, the message stays in the database and is fetched when they reconnect and logs in.
+[x] On clicking on the partner let's fetch all the messages between is
+[x] Send message to the recipient
+[x] If the recipient is offline, the message stays in the database and is fetched when they reconnect and logs in.
 
 [ ] Chatlist: azok a résztvevők legyenek ott, akivel már chateltem.
 
