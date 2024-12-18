@@ -39,9 +39,9 @@ async function bootstrap() {
   new WebSocketServer(httpServer, messagesService);
 
   await app.init();
-  await new Promise<void>((resolve) => httpServer.listen(3000, resolve));
+  await new Promise<void>((resolve) => httpServer.listen(443, resolve));
   console.log(`Running in ${process.env.MODE} mode`);
-  console.log('HTTP Server running on port 3000');
+  console.log('HTTP Server running on port 443');
 }
 
 bootstrap().catch((error) => {
