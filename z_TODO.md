@@ -1,9 +1,7 @@
-**Save message to db and deliver message to recipient**
+**FIX**
 
-[x] On clicking on the partner let's fetch all the messages between is
-[x] Send message to the recipient
-[x] If the recipient is offline, the message stays in the database and is fetched when they reconnect and logs in.
-
+[ ] Login button fekete!
+[ ] Login hiba üzenet ne legyen teal
 [ ] Upon login I still might see earlier messages?
 [ ] Chatlist: azok a résztvevők legyenek ott, akivel már chateltem.
 
@@ -25,22 +23,7 @@
 
 **Chat history**
 
-[ ] On clicking on the person in the chatlist, chat history is loaded
 [ ] On scrolling back up more messages appear, use loading indicator
-
-**Create and flow User information between backend and frontend**
-
-[ ] Create User data model OK
-[ ] Write a backend script that creates a new User entry in the database with hased password
-[ ] Write a frontend service that gets this User's information from the database
-[ ] Modify the home component so that it display the received User data
-[ ] Build chat list component with virtual scrolling
-[ ] Create chat window component
-[ ] Implement message display with timestamps
-[ ] Add message input and sending functionality
-[ ] Implement responsive design with Tailwind
-
-**Backend API Development**
 
 [ ] Implement User APIs (GET /users, GET /users/:id)
 

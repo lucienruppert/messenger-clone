@@ -119,3 +119,9 @@
 [x] Add a UUID if none
 [x] Save message to the db
 [x] Fixed prod variables so the app automatically chooses remote backend
+
+**Save message to db and deliver message to recipient**
+
+[x] On clicking on the partner let's fetch all the messages between is
+[x] Send message to the recipient
+[x] If the recipient is offline, the message stays in the database and is fetched when they reconnect and logs in.
