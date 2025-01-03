@@ -19,7 +19,10 @@ export class WebSocketServer {
   ) {
     this.clients = new Set<WebSocket>();
     this.emailStore = [];
-    this.wsServer = new WebSocket.Server({ server });
+    this.wsServer = new WebSocket.Server({
+      server,
+      path: '/ws', // Add explicit path
+    });
     this.initialize();
   }
 
